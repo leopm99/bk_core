@@ -24,7 +24,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import l2r.Config;
 import l2r.gameserver.communitybbs.Managers.ClanBBSManager;
 import l2r.gameserver.communitybbs.Managers.DonateBBSManager;
-import l2r.gameserver.communitybbs.Managers.FavoriteBBSManager;
+import l2r.gameserver.communitybbs.Managers.DropInfoBBSManager;
 import l2r.gameserver.communitybbs.Managers.MailBBSManager;
 import l2r.gameserver.communitybbs.Managers.PostBBSManager;
 import l2r.gameserver.communitybbs.Managers.ServicesBBSManager;
@@ -105,15 +105,16 @@ public class BoardsManager
 		}
 		else if (command.startsWith("_friendlist_0_") || command.startsWith("_bbs_friends") || command.startsWith("_bbsfriends"))
 		{
-		
+			
 		}
 		else if (command.startsWith("_bbsloc"))
 		{
 			// RegionBBSManager.getInstance().cbByPass(command, activeChar);
 		}
-		else if (command.startsWith("_bbsgetfav") || command.startsWith("bbs_add_fav") || command.startsWith("_bbsdelfav_"))
+		else if (command.startsWith("_bbsgetfav") || command.startsWith("bbs_add_fav") || command.startsWith("_bbsdelfav_") || command.startsWith("_bbssearch"))
 		{
-			FavoriteBBSManager.getInstance().cbByPass(command, activeChar);
+			// FavoriteBBSManager.getInstance().cbByPass(command, activeChar);
+			DropInfoBBSManager.getInstance().cbByPass(command, activeChar);
 		}
 		else if (command.startsWith("_bbslink"))
 		{
