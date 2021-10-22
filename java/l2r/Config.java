@@ -1484,12 +1484,12 @@ public final class Config extends AbstractConfigs
 			CLAN_LEVEL_9_COST = Feature.getInt("ClanLevel9Cost", 40000);
 			CLAN_LEVEL_10_COST = Feature.getInt("ClanLevel10Cost", 40000);
 			CLAN_LEVEL_11_COST = Feature.getInt("ClanLevel11Cost", 75000);
-			CLAN_LEVEL_6_REQUIREMENT = Feature.getInt("ClanLevel6Requirement", 30);
-			CLAN_LEVEL_7_REQUIREMENT = Feature.getInt("ClanLevel7Requirement", 50);
-			CLAN_LEVEL_8_REQUIREMENT = Feature.getInt("ClanLevel8Requirement", 80);
-			CLAN_LEVEL_9_REQUIREMENT = Feature.getInt("ClanLevel9Requirement", 120);
-			CLAN_LEVEL_10_REQUIREMENT = Feature.getInt("ClanLevel10Requirement", 140);
-			CLAN_LEVEL_11_REQUIREMENT = Feature.getInt("ClanLevel11Requirement", 170);
+			CLAN_LEVEL_6_REQUIREMENT = Feature.getInt("ClanLevel6Requirement", 10);
+			CLAN_LEVEL_7_REQUIREMENT = Feature.getInt("ClanLevel7Requirement", 10);
+			CLAN_LEVEL_8_REQUIREMENT = Feature.getInt("ClanLevel8Requirement", 10);
+			CLAN_LEVEL_9_REQUIREMENT = Feature.getInt("ClanLevel9Requirement", 10);
+			CLAN_LEVEL_10_REQUIREMENT = Feature.getInt("ClanLevel10Requirement", 10);
+			CLAN_LEVEL_11_REQUIREMENT = Feature.getInt("ClanLevel11Requirement", 10);
 			ALLOW_WYVERN_ALWAYS = Feature.getBoolean("AllowRideWyvernAlways", false);
 			ALLOW_WYVERN_DURING_SIEGE = Feature.getBoolean("AllowRideWyvernDuringSiege", true);
 			
@@ -1497,20 +1497,20 @@ public final class Config extends AbstractConfigs
 			final PropertiesParser Character = new PropertiesParser(CHARACTER_CONFIG_FILE);
 			
 			ALT_GAME_DELEVEL = Character.getBoolean("Delevel", true);
-			DECREASE_SKILL_LEVEL = Character.getBoolean("DecreaseSkillOnDelevel", true);
+			DECREASE_SKILL_LEVEL = Character.getBoolean("DecreaseSkillOnDelevel", false);
 			MAX_LEVEL_DIFF_CAN_KEEP_SKILL_LVL = Character.getInt("MaxLvlDiffCanKeepSkillLvl", 9);
-			ALT_WEIGHT_LIMIT = Character.getDouble("AltWeightLimit", 1);
+			ALT_WEIGHT_LIMIT = Character.getDouble("AltWeightLimit", 50);
 			RUN_SPD_BOOST = Character.getInt("RunSpeedBoost", 0);
-			DEATH_PENALTY_CHANCE = Character.getInt("DeathPenaltyChance", 20);
+			DEATH_PENALTY_CHANCE = Character.getInt("DeathPenaltyChance", 10);
 			RESPAWN_RESTORE_CP = Character.getDouble("RespawnRestoreCP", 0) / 100;
 			RESPAWN_RESTORE_HP = Character.getDouble("RespawnRestoreHP", 65) / 100;
 			RESPAWN_RESTORE_MP = Character.getDouble("RespawnRestoreMP", 0) / 100;
 			HP_REGEN_MULTIPLIER = Character.getDouble("HpRegenMultiplier", 100) / 100;
 			MP_REGEN_MULTIPLIER = Character.getDouble("MpRegenMultiplier", 100) / 100;
 			CP_REGEN_MULTIPLIER = Character.getDouble("CpRegenMultiplier", 100) / 100;
-			ENABLE_MODIFY_SKILL_DURATION = Character.getBoolean("EnableModifySkillDuration", false);
+			ENABLE_MODIFY_SKILL_DURATION = Character.getBoolean("EnableModifySkillDuration", true);
 			RETAIL_SKILL_REUSE = Character.getBoolean("RetailSkillReuse", true);
-			RETAIL_FAKE_DEATH = Character.getBoolean("RetailFakeDeath", true);
+			RETAIL_FAKE_DEATH = Character.getBoolean("RetailFakeDeath", false);
 			
 			// Create Map only if enabled
 			if (ENABLE_MODIFY_SKILL_DURATION)
@@ -1570,14 +1570,14 @@ public final class Config extends AbstractConfigs
 				}
 			}
 			
-			AUTO_LEARN_SKILLS = Character.getBoolean("AutoLearnSkills", false);
+			AUTO_LEARN_SKILLS = Character.getBoolean("AutoLearnSkills", true);
 			AUTO_LEARN_FS_SKILLS = Character.getBoolean("AutoLearnForgottenScrollSkills", false);
-			BUFFS_MAX_AMOUNT = Character.getByte("MaxBuffAmount", (byte) 20);
+			BUFFS_MAX_AMOUNT = Character.getByte("MaxBuffAmount", (byte) 24);
 			TRIGGERED_BUFFS_MAX_AMOUNT = Character.getByte("MaxTriggeredBuffAmount", (byte) 12);
-			DANCES_MAX_AMOUNT = Character.getByte("MaxDanceAmount", (byte) 12);
-			DANCE_CANCEL_BUFF = Character.getBoolean("DanceCancelBuff", false);
+			DANCES_MAX_AMOUNT = Character.getByte("MaxDanceAmount", (byte) 14);
+			DANCE_CANCEL_BUFF = Character.getBoolean("DanceCancelBuff", true);
 			DANCE_CONSUME_ADDITIONAL_MP = Character.getBoolean("DanceConsumeAdditionalMP", true);
-			ALT_STORE_DANCES = Character.getBoolean("AltStoreDances", false);
+			ALT_STORE_DANCES = Character.getBoolean("AltStoreDances", true);
 			AUTO_LEARN_DIVINE_INSPIRATION = Character.getBoolean("AutoLearnDivineInspiration", false);
 			ALT_GAME_CANCEL_BOW = Character.getString("AltGameCancelByHit", "Cast").equalsIgnoreCase("bow") || Character.getString("AltGameCancelByHit", "Cast").equalsIgnoreCase("all");
 			ALT_GAME_CANCEL_CAST = Character.getString("AltGameCancelByHit", "Cast").equalsIgnoreCase("cast") || Character.getString("AltGameCancelByHit", "Cast").equalsIgnoreCase("all");
@@ -1585,13 +1585,13 @@ public final class Config extends AbstractConfigs
 			ALT_GAME_MAGICFAILURES = Character.getBoolean("MagicFailures", true);
 			PLAYER_FAKEDEATH_UP_PROTECTION = Character.getInt("PlayerFakeDeathUpProtection", 0);
 			STORE_SKILL_COOLTIME = Character.getBoolean("StoreSkillCooltime", true);
-			SUBCLASS_STORE_SKILL_COOLTIME = Character.getBoolean("SubclassStoreSkillCooltime", false);
+			SUBCLASS_STORE_SKILL_COOLTIME = Character.getBoolean("SubclassStoreSkillCooltime", true);
 			SUMMON_STORE_SKILL_COOLTIME = Character.getBoolean("SummonStoreSkillCooltime", true);
 			ALT_GAME_SHIELD_BLOCKS = Character.getBoolean("AltShieldBlocks", false);
 			ALT_PERFECT_SHLD_BLOCK = Character.getInt("AltPerfectShieldBlockRate", 10);
 			ALLOW_CLASS_MASTERS = Character.getBoolean("AllowClassMasters", false);
 			ALLOW_ENTIRE_TREE = Character.getBoolean("AllowEntireTree", false);
-			ALTERNATE_CLASS_MASTER = Character.getBoolean("AlternateClassMaster", false);
+			ALTERNATE_CLASS_MASTER = Character.getBoolean("AlternateClassMaster", true);
 			if (ALLOW_CLASS_MASTERS || ALTERNATE_CLASS_MASTER)
 			{
 				CLASS_MASTER_SETTINGS = new ClassMasterSettings(Character.getString("ConfigClassMaster", ""));
@@ -1601,10 +1601,10 @@ public final class Config extends AbstractConfigs
 			DIVINE_SP_BOOK_NEEDED = Character.getBoolean("DivineInspirationSpBookNeeded", true);
 			ALT_GAME_SKILL_LEARN = Character.getBoolean("AltGameSkillLearn", false);
 			ALT_GAME_SUBCLASS_WITHOUT_QUESTS = Character.getBoolean("AltSubClassWithoutQuests", false);
-			ALT_GAME_SUBCLASS_EVERYWHERE = Character.getBoolean("AltSubclassEverywhere", false);
+			ALT_GAME_SUBCLASS_EVERYWHERE = Character.getBoolean("AltSubclassEverywhere", true);
 			RESTORE_SERVITOR_ON_RECONNECT = Character.getBoolean("RestoreServitorOnReconnect", true);
 			RESTORE_PET_ON_RECONNECT = Character.getBoolean("RestorePetOnReconnect", true);
-			ALLOW_TRANSFORM_WITHOUT_QUEST = Character.getBoolean("AltTransformationWithoutQuest", false);
+			ALLOW_TRANSFORM_WITHOUT_QUEST = Character.getBoolean("AltTransformationWithoutQuest", true);
 			FEE_DELETE_TRANSFER_SKILLS = Character.getInt("FeeDeleteTransferSkills", 10000000);
 			FEE_DELETE_SUBCLASS_SKILLS = Character.getInt("FeeDeleteSubClassSkills", 10000000);
 			ENABLE_VITALITY = Character.getBoolean("EnableVitality", true);
@@ -1614,19 +1614,19 @@ public final class Config extends AbstractConfigs
 			MAX_BONUS_SP = Character.getDouble("MaxSpBonus", 3.5);
 			MAX_SUBCLASS = Character.getByte("MaxSubclass", (byte) 3);
 			BASE_SUBCLASS_LEVEL = Character.getByte("BaseSubclassLevel", (byte) 40);
-			MAX_SUBCLASS_LEVEL = Character.getByte("MaxSubclassLevel", (byte) 80);
-			MAX_PVTSTORESELL_SLOTS_DWARF = Character.getInt("MaxPvtStoreSellSlotsDwarf", 4);
-			MAX_PVTSTORESELL_SLOTS_OTHER = Character.getInt("MaxPvtStoreSellSlotsOther", 3);
-			MAX_PVTSTOREBUY_SLOTS_DWARF = Character.getInt("MaxPvtStoreBuySlotsDwarf", 5);
-			MAX_PVTSTOREBUY_SLOTS_OTHER = Character.getInt("MaxPvtStoreBuySlotsOther", 4);
-			INVENTORY_MAXIMUM_NO_DWARF = Character.getInt("MaximumSlotsForNoDwarf", 80);
-			INVENTORY_MAXIMUM_DWARF = Character.getInt("MaximumSlotsForDwarf", 100);
+			MAX_SUBCLASS_LEVEL = Character.getByte("MaxSubclassLevel", (byte) 85);
+			MAX_PVTSTORESELL_SLOTS_DWARF = Character.getInt("MaxPvtStoreSellSlotsDwarf", 12);
+			MAX_PVTSTORESELL_SLOTS_OTHER = Character.getInt("MaxPvtStoreSellSlotsOther", 6);
+			MAX_PVTSTOREBUY_SLOTS_DWARF = Character.getInt("MaxPvtStoreBuySlotsDwarf", 12);
+			MAX_PVTSTOREBUY_SLOTS_OTHER = Character.getInt("MaxPvtStoreBuySlotsOther", 6);
+			INVENTORY_MAXIMUM_NO_DWARF = Character.getInt("MaximumSlotsForNoDwarf", 150);
+			INVENTORY_MAXIMUM_DWARF = Character.getInt("MaximumSlotsForDwarf", 180);
 			INVENTORY_MAXIMUM_GM = Character.getInt("MaximumSlotsForGMPlayer", 250);
 			INVENTORY_MAXIMUM_QUEST_ITEMS = Character.getInt("MaximumSlotsForQuestItems", 100);
 			MAX_ITEM_IN_PACKET = Math.max(INVENTORY_MAXIMUM_NO_DWARF, Math.max(INVENTORY_MAXIMUM_DWARF, INVENTORY_MAXIMUM_GM));
-			WAREHOUSE_SLOTS_DWARF = Character.getInt("MaximumWarehouseSlotsForDwarf", 120);
-			WAREHOUSE_SLOTS_NO_DWARF = Character.getInt("MaximumWarehouseSlotsForNoDwarf", 100);
-			WAREHOUSE_SLOTS_CLAN = Character.getInt("MaximumWarehouseSlotsForClan", 150);
+			WAREHOUSE_SLOTS_DWARF = Character.getInt("MaximumWarehouseSlotsForDwarf", 220);
+			WAREHOUSE_SLOTS_NO_DWARF = Character.getInt("MaximumWarehouseSlotsForNoDwarf", 200);
+			WAREHOUSE_SLOTS_CLAN = Character.getInt("MaximumWarehouseSlotsForClan", 250);
 			ALT_FREIGHT_SLOTS = Character.getInt("MaximumFreightSlots", 200);
 			ALT_FREIGHT_PRICE = Character.getInt("FreightPrice", 1000);
 			ENCHANT_CHANCE_ELEMENT_STONE_S = Character.getDouble("EnchantChanceElementStoneS", 50);
@@ -1698,11 +1698,11 @@ public final class Config extends AbstractConfigs
 			Arrays.sort(AUGMENTATION_BLACKLIST);
 			
 			ALT_GAME_KARMA_PLAYER_CAN_BE_KILLED_IN_PEACEZONE = Character.getBoolean("AltKarmaPlayerCanBeKilledInPeaceZone", false);
-			ALT_GAME_KARMA_PLAYER_CAN_SHOP = Character.getBoolean("AltKarmaPlayerCanShop", true);
-			ALT_GAME_KARMA_PLAYER_CAN_TELEPORT = Character.getBoolean("AltKarmaPlayerCanTeleport", true);
+			ALT_GAME_KARMA_PLAYER_CAN_SHOP = Character.getBoolean("AltKarmaPlayerCanShop", false);
+			ALT_GAME_KARMA_PLAYER_CAN_TELEPORT = Character.getBoolean("AltKarmaPlayerCanTeleport", false);
 			ALT_GAME_KARMA_PLAYER_CAN_USE_GK = Character.getBoolean("AltKarmaPlayerCanUseGK", false);
-			ALT_GAME_KARMA_PLAYER_CAN_TRADE = Character.getBoolean("AltKarmaPlayerCanTrade", true);
-			ALT_GAME_KARMA_PLAYER_CAN_USE_WAREHOUSE = Character.getBoolean("AltKarmaPlayerCanUseWareHouse", true);
+			ALT_GAME_KARMA_PLAYER_CAN_TRADE = Character.getBoolean("AltKarmaPlayerCanTrade", false);
+			ALT_GAME_KARMA_PLAYER_CAN_USE_WAREHOUSE = Character.getBoolean("AltKarmaPlayerCanUseWareHouse", false);
 			MAX_PERSONAL_FAME_POINTS = Character.getInt("MaxPersonalFamePoints", 100000);
 			FORTRESS_ZONE_FAME_TASK_FREQUENCY = Character.getInt("FortressZoneFameTaskFrequency", 300);
 			FORTRESS_ZONE_FAME_AQUIRE_POINTS = Character.getInt("FortressZoneFameAquirePoints", 31);
@@ -1711,7 +1711,7 @@ public final class Config extends AbstractConfigs
 			FAME_FOR_DEAD_PLAYERS = Character.getBoolean("FameForDeadPlayers", true);
 			IS_CRAFTING_ENABLED = Character.getBoolean("CraftingEnabled", true);
 			CRAFT_MASTERWORK = Character.getBoolean("CraftMasterwork", true);
-			DWARF_RECIPE_LIMIT = Character.getInt("DwarfRecipeLimit", 50);
+			DWARF_RECIPE_LIMIT = Character.getInt("DwarfRecipeLimit", 100);
 			COMMON_RECIPE_LIMIT = Character.getInt("CommonRecipeLimit", 50);
 			ALT_GAME_CREATION = Character.getBoolean("AltGameCreation", false);
 			ALT_GAME_CREATION_SPEED = Character.getDouble("AltGameCreationSpeed", 1);
@@ -1738,9 +1738,9 @@ public final class Config extends AbstractConfigs
 			ALT_CLAN_MEMBERS_FOR_WAR = Character.getInt("AltClanMembersForWar", 15);
 			ALT_MEMBERS_CAN_WITHDRAW_FROM_CLANWH = Character.getBoolean("AltMembersCanWithdrawFromClanWH", false);
 			REMOVE_CASTLE_CIRCLETS = Character.getBoolean("RemoveCastleCirclets", true);
-			ALT_PARTY_RANGE = Character.getInt("AltPartyRange", 1600);
-			ALT_PARTY_RANGE2 = Character.getInt("AltPartyRange2", 1400);
-			ALT_LEAVE_PARTY_LEADER = Character.getBoolean("AltLeavePartyLeader", false);
+			ALT_PARTY_RANGE = Character.getInt("AltPartyRange", 2600);
+			ALT_PARTY_RANGE2 = Character.getInt("AltPartyRange2", 2400);
+			ALT_LEAVE_PARTY_LEADER = Character.getBoolean("AltLeavePartyLeader", true);
 			INITIAL_EQUIPMENT_EVENT = Character.getBoolean("InitialEquipmentEvent", false);
 			STARTING_ADENA = Character.getLong("StartingAdena", 0);
 			STARTING_LEVEL = Character.getByte("StartingLevel", (byte) 1);
@@ -1750,7 +1750,7 @@ public final class Config extends AbstractConfigs
 			{
 				MAX_ADENA = Long.MAX_VALUE;
 			}
-			UNSTUCK_INTERVAL = Character.getInt("UnstuckInterval", 300);
+			UNSTUCK_INTERVAL = Character.getInt("UnstuckInterval", 20);
 			TELEPORT_WATCHDOG_TIMEOUT = Character.getInt("TeleportWatchdogTimeout", 0);
 			PLAYER_SPAWN_PROTECTION = Character.getInt("PlayerSpawnProtection", 0);
 			String[] items = Character.getString("PlayerSpawnProtectionAllowedItems", "0").split(",");
@@ -1783,7 +1783,7 @@ public final class Config extends AbstractConfigs
 			DELETE_DAYS = Character.getInt("DeleteCharAfterDays", 7);
 			ALT_GAME_EXPONENT_XP = Character.getFloat("AltGameExponentXp", 0);
 			ALT_GAME_EXPONENT_SP = Character.getFloat("AltGameExponentSp", 0);
-			PARTY_XP_CUTOFF_METHOD = Character.getString("PartyXpCutoffMethod", "highfive");
+			PARTY_XP_CUTOFF_METHOD = Character.getString("PartyXpCutoffMethod", "level");
 			PARTY_XP_CUTOFF_PERCENT = Character.getDouble("PartyXpCutoffPercent", 3);
 			PARTY_XP_CUTOFF_LEVEL = Character.getInt("PartyXpCutoffLevel", 20);
 			final String[] gaps = Character.getString("PartyXpCutoffGaps", "0,9;10,14;15,99").split(";");
@@ -1814,10 +1814,10 @@ public final class Config extends AbstractConfigs
 			// Load Instances L2Properties file (if exists)
 			final PropertiesParser instancesSettings = new PropertiesParser(INSTANCES_CONFIG_FILE);
 			
-			INSTANCE_FINISH_TIME = 1000 * instancesSettings.getInt("DefaultFinishTime", 300);
-			RESTORE_PLAYER_INSTANCE = instancesSettings.getBoolean("RestorePlayerInstance", false);
+			INSTANCE_FINISH_TIME = 1000 * instancesSettings.getInt("DefaultFinishTime", 120);
+			RESTORE_PLAYER_INSTANCE = instancesSettings.getBoolean("RestorePlayerInstance", true);
 			ALLOW_SUMMON_IN_INSTANCE = instancesSettings.getBoolean("AllowSummonInInstance", false);
-			EJECT_DEAD_PLAYER_TIME = 1000 * instancesSettings.getInt("EjectDeadPlayerTime", 60);
+			EJECT_DEAD_PLAYER_TIME = 1000 * instancesSettings.getInt("EjectDeadPlayerTime", 180);
 			
 			// Load ClientPackets L2Properties file (if exists)
 			final PropertiesParser clientPacketsSettings = new PropertiesParser(CLIENT_PACKETS_FILE);
@@ -1870,9 +1870,9 @@ public final class Config extends AbstractConfigs
 			GM_STARTUP_SILENCE = General.getBoolean("GMStartupSilence", false);
 			GM_STARTUP_AUTO_LIST = General.getBoolean("GMStartupAutoList", false);
 			GM_STARTUP_DIET_MODE = General.getBoolean("GMStartupDietMode", false);
-			GM_ITEM_RESTRICTION = General.getBoolean("GMItemRestriction", true);
-			GM_SKILL_RESTRICTION = General.getBoolean("GMSkillRestriction", true);
-			GM_TRADE_RESTRICTED_ITEMS = General.getBoolean("GMTradeRestrictedItems", false);
+			GM_ITEM_RESTRICTION = General.getBoolean("GMItemRestriction", false);
+			GM_SKILL_RESTRICTION = General.getBoolean("GMSkillRestriction", false);
+			GM_TRADE_RESTRICTED_ITEMS = General.getBoolean("GMTradeRestrictedItems", true);
 			GM_RESTART_FIGHTING = General.getBoolean("GMRestartFighting", true);
 			GM_ANNOUNCER_NAME = General.getBoolean("GMShowAnnouncerName", false);
 			GM_CRITANNOUNCER_NAME = General.getBoolean("GMShowCritAnnouncerName", false);
@@ -1892,7 +1892,7 @@ public final class Config extends AbstractConfigs
 			LOG_GAME_DAMAGE_THRESHOLD = General.getInt("LogGameDamageThreshold", 5000);
 			SKILL_CHECK_ENABLE = General.getBoolean("SkillCheckEnable", false);
 			SKILL_CHECK_REMOVE = General.getBoolean("SkillCheckRemove", false);
-			SKILL_CHECK_GM = General.getBoolean("SkillCheckGM", true);
+			SKILL_CHECK_GM = General.getBoolean("SkillCheckGM", false);
 			THREAD_P_EFFECTS = General.getInt("ThreadPoolSizeEffects", 10);
 			THREAD_P_GENERAL = General.getInt("ThreadPoolSizeGeneral", 13);
 			THREAD_E_EVENTS = General.getInt("ThreadPoolSizeEvents", 2);
@@ -2034,14 +2034,14 @@ public final class Config extends AbstractConfigs
 			JAIL_DISABLE_TRANSACTION = General.getBoolean("JailDisableTransaction", false);
 			CUSTOM_SPAWNLIST_TABLE = General.getBoolean("CustomSpawnlistTable", false);
 			SAVE_GMSPAWN_ON_CUSTOM = General.getBoolean("SaveGmSpawnOnCustom", false);
-			CUSTOM_NPC_TABLE = General.getBoolean("CustomNpcTable", false);
-			CUSTOM_NPC_SKILLS_TABLE = General.getBoolean("CustomNpcSkillsTable", false);
-			CUSTOM_TELEPORT_TABLE = General.getBoolean("CustomTeleportTable", false);
-			CUSTOM_DROPLIST_TABLE = General.getBoolean("CustomDroplistTable", false);
-			CUSTOM_SKILLS_LOAD = General.getBoolean("CustomSkillsLoad", false);
-			CUSTOM_ITEMS_LOAD = General.getBoolean("CustomItemsLoad", false);
-			CUSTOM_MULTISELL_LOAD = General.getBoolean("CustomMultisellLoad", false);
-			CUSTOM_BUYLIST_LOAD = General.getBoolean("CustomBuyListLoad", false);
+			CUSTOM_NPC_TABLE = General.getBoolean("CustomNpcTable", true);
+			CUSTOM_NPC_SKILLS_TABLE = General.getBoolean("CustomNpcSkillsTable", true);
+			CUSTOM_TELEPORT_TABLE = General.getBoolean("CustomTeleportTable", true);
+			CUSTOM_DROPLIST_TABLE = General.getBoolean("CustomDroplistTable", true);
+			CUSTOM_SKILLS_LOAD = General.getBoolean("CustomSkillsLoad", true);
+			CUSTOM_ITEMS_LOAD = General.getBoolean("CustomItemsLoad", true);
+			CUSTOM_MULTISELL_LOAD = General.getBoolean("CustomMultisellLoad", true);
+			CUSTOM_BUYLIST_LOAD = General.getBoolean("CustomBuyListLoad", true);
 			ALT_BIRTHDAY_GIFT = General.getInt("AltBirthdayGift", 22187);
 			ALT_BIRTHDAY_MAIL_SUBJECT = General.getString("AltBirthdayMailSubject", "Happy Birthday!");
 			ALT_BIRTHDAY_MAIL_TEXT = General.getString("AltBirthdayMailText", "Hello Adventurer!! Seeing as you're one year older now, I thought I would send you some birthday cheer :) Please find your birthday pack attached. May these gifts bring you joy and happiness on this very special day." + EOL + EOL + "Sincerely, Alegria");
@@ -2056,7 +2056,7 @@ public final class Config extends AbstractConfigs
 				MIN_BLOCK_CHECKER_TEAM_MEMBERS = 6;
 			}
 			HBCE_FAIR_PLAY = General.getBoolean("HBCEFairPlay", false);
-			HELLBOUND_WITHOUT_QUEST = General.getBoolean("HellboundWithoutQuest", false);
+			HELLBOUND_WITHOUT_QUEST = General.getBoolean("HellboundWithoutQuest", true);
 			
 			NORMAL_ENCHANT_COST_MULTIPLIER = General.getInt("NormalEnchantCostMultipiler", 1);
 			SAFE_ENCHANT_COST_MULTIPLIER = General.getInt("SafeEnchantCostMultipiler", 5);
@@ -2069,13 +2069,13 @@ public final class Config extends AbstractConfigs
 			// Load NPC L2Properties file (if exists)
 			final PropertiesParser NPC = new PropertiesParser(NPC_CONFIG_FILE);
 			
-			ANNOUNCE_MAMMON_SPAWN = NPC.getBoolean("AnnounceMammonSpawn", false);
+			ANNOUNCE_MAMMON_SPAWN = NPC.getBoolean("AnnounceMammonSpawn", true);
 			ALT_MOB_AGRO_IN_PEACEZONE = NPC.getBoolean("AltMobAgroInPeaceZone", true);
 			ALT_ATTACKABLE_NPCS = NPC.getBoolean("AltAttackableNpcs", true);
-			ALT_GAME_VIEWNPC = NPC.getBoolean("AltGameViewNpc", false);
+			ALT_GAME_VIEWNPC = NPC.getBoolean("AltGameViewNpc", true);
 			MAX_DRIFT_RANGE = NPC.getInt("MaxDriftRange", 300);
 			SHOW_NPC_LVL = NPC.getBoolean("ShowNpcLevel", false);
-			SHOW_CREST_WITHOUT_QUEST = NPC.getBoolean("ShowCrestWithoutQuest", false);
+			SHOW_CREST_WITHOUT_QUEST = NPC.getBoolean("ShowCrestWithoutQuest", true);
 			ENABLE_RANDOM_ENCHANT_EFFECT = NPC.getBoolean("EnableRandomEnchantEffect", false);
 			MIN_NPC_LVL_DMG_PENALTY = NPC.getInt("MinNPCLevelForDmgPenalty", 78);
 			NPC_DMG_PENALTY = parseConfigLine(NPC.getString("DmgPenaltyForLvLDifferences", "0.7, 0.6, 0.6, 0.55"));
@@ -2234,14 +2234,14 @@ public final class Config extends AbstractConfigs
 			// Load Champions L2Properties file (if exists)
 			final PropertiesParser champions = new PropertiesParser(CHAMPION_MOBS_CONFIG);
 			
-			L2JMOD_CHAMPION_ENABLE = champions.getBoolean("ChampionEnable", false);
-			L2JMOD_CHAMPION_ENABLE_AURA = champions.getBoolean("ChampionEnableAura", false);
-			L2JMOD_CHAMPION_PASSIVE = champions.getBoolean("ChampionPassive", false);
-			L2JMOD_CHAMPION_FREQUENCY = champions.getInt("ChampionFrequency", 0);
+			L2JMOD_CHAMPION_ENABLE = champions.getBoolean("ChampionEnable", true);
+			L2JMOD_CHAMPION_ENABLE_AURA = champions.getBoolean("ChampionEnableAura", true);
+			L2JMOD_CHAMPION_PASSIVE = champions.getBoolean("ChampionPassive", true);
+			L2JMOD_CHAMPION_FREQUENCY = champions.getInt("ChampionFrequency", 1);
 			L2JMOD_CHAMP_TITLE = champions.getString("ChampionTitle", "Champion");
 			L2JMOD_CHAMP_MIN_LVL = champions.getInt("ChampionMinLevel", 20);
-			L2JMOD_CHAMP_MAX_LVL = champions.getInt("ChampionMaxLevel", 60);
-			L2JMOD_CHAMPION_HP = champions.getInt("ChampionHp", 7);
+			L2JMOD_CHAMP_MAX_LVL = champions.getInt("ChampionMaxLevel", 80);
+			L2JMOD_CHAMPION_HP = champions.getInt("ChampionHp", 5);
 			L2JMOD_CHAMPION_HP_REGEN = champions.getFloat("ChampionHpRegen", 1);
 			L2JMOD_CHAMPION_REWARDS = champions.getInt("ChampionRewards", 8);
 			L2JMOD_CHAMPION_REWARDS_EXP = champions.getInt("ChampionRewardsExp", 8);
@@ -2276,18 +2276,18 @@ public final class Config extends AbstractConfigs
 			BANKING_SYSTEM_GOLDBARS = L2JModSettings.getInt("BankingGoldbarCount", 1);
 			BANKING_SYSTEM_ADENA = L2JModSettings.getInt("BankingAdenaCount", 500000000);
 			
-			OFFLINE_TRADE_ENABLE = L2JModSettings.getBoolean("OfflineTradeEnable", false);
-			OFFLINE_CRAFT_ENABLE = L2JModSettings.getBoolean("OfflineCraftEnable", false);
+			OFFLINE_TRADE_ENABLE = L2JModSettings.getBoolean("OfflineTradeEnable", true);
+			OFFLINE_CRAFT_ENABLE = L2JModSettings.getBoolean("OfflineCraftEnable", true);
 			OFFLINE_MODE_IN_PEACE_ZONE = L2JModSettings.getBoolean("OfflineModeInPaceZone", false);
 			OFFLINE_MODE_NO_DAMAGE = L2JModSettings.getBoolean("OfflineModeNoDamage", false);
 			OFFLINE_SET_NAME_COLOR = L2JModSettings.getBoolean("OfflineSetNameColor", false);
 			OFFLINE_NAME_COLOR = Integer.decode("0x" + L2JModSettings.getString("OfflineNameColor", "808080"));
 			OFFLINE_FAME = L2JModSettings.getBoolean("OfflineFame", true);
 			RESTORE_OFFLINERS = L2JModSettings.getBoolean("RestoreOffliners", false);
-			OFFLINE_MAX_DAYS = L2JModSettings.getInt("OfflineMaxDays", 10);
+			OFFLINE_MAX_DAYS = L2JModSettings.getInt("OfflineMaxDays", 30);
 			OFFLINE_DISCONNECT_FINISHED = L2JModSettings.getBoolean("OfflineDisconnectFinished", true);
 			
-			L2JMOD_ENABLE_MANA_POTIONS_SUPPORT = L2JModSettings.getBoolean("EnableManaPotionSupport", false);
+			L2JMOD_ENABLE_MANA_POTIONS_SUPPORT = L2JModSettings.getBoolean("EnableManaPotionSupport", true);
 			
 			L2JMOD_DISPLAY_SERVER_TIME = L2JModSettings.getBoolean("DisplayServerTime", false);
 			
@@ -2587,7 +2587,7 @@ public final class Config extends AbstractConfigs
 			
 			ANTHARAS_MAX_PLAYERS = antharas_load.getInt("AntharasMaxPlayers", 200);
 			ANTHARAS_MAX_MINIONS_COUNT = antharas_load.getInt("AntharasMaxMinionsCount", 100);
-			ANTHARAS_WAIT_TIME = antharas_load.getInt("AntharasWaitTime", 30);
+			ANTHARAS_WAIT_TIME = antharas_load.getInt("AntharasWaitTime", 5);
 			ANTHARAS_SPAWN_INTERVAL = antharas_load.getInt("IntervalOfAntharasSpawn", 192);
 			ANTHARAS_SPAWN_RANDOM = antharas_load.getInt("RandomOfAntharasSpawn", 12);
 			
@@ -2595,7 +2595,7 @@ public final class Config extends AbstractConfigs
 			final PropertiesParser valakas_load = new PropertiesParser(VALAKAS_CONFIG);
 			
 			VALAKAS_MAX_PLAYERS = valakas_load.getInt("ValakasMaxPlayers", 200);
-			VALAKAS_WAIT_TIME = valakas_load.getInt("ValakasWaitTime", 30);
+			VALAKAS_WAIT_TIME = valakas_load.getInt("ValakasWaitTime", 5);
 			VALAKAS_SPAWN_INTERVAL = valakas_load.getInt("IntervalOfValakasSpawn", 264);
 			VALAKAS_SPAWN_RANDOM = valakas_load.getInt("RandomOfValakasSpawn", 12);
 			
@@ -2615,14 +2615,14 @@ public final class Config extends AbstractConfigs
 			final PropertiesParser freyaeasy_load = new PropertiesParser(FREYA_EASY_CONFIG);
 			
 			MIN_PLAYER_LEVEL_TO_EASY = freyaeasy_load.getInt("MinLevel", 82);
-			MIN_PLAYERS_TO_EASY = freyaeasy_load.getInt("MinPlayers", 10);
+			MIN_PLAYERS_TO_EASY = freyaeasy_load.getInt("MinPlayers", 4);
 			MAX_PLAYERS_TO_EASY = freyaeasy_load.getInt("MaxPlayers", 27);
 			
 			// Load FREYA_HARDCORE_CONFIG L2Properties file (if exists)
 			final PropertiesParser freyahardcore_load = new PropertiesParser(FREYA_HARDCORE_CONFIG);
 			
 			MIN_PLAYER_LEVEL_TO_HARD = freyahardcore_load.getInt("MinLevel", 82);
-			MIN_PLAYERS_TO_HARD = freyahardcore_load.getInt("MinPlayers", 36);
+			MIN_PLAYERS_TO_HARD = freyahardcore_load.getInt("MinPlayers", 4);
 			MAX_PLAYERS_TO_HARD = freyahardcore_load.getInt("MaxPlayers", 45);
 			
 			// Load ORFEN_CONFIG L2Properties file (if exists)
@@ -2643,19 +2643,19 @@ public final class Config extends AbstractConfigs
 			
 			BELETH_SPAWN_INTERVAL = beleth_load.getInt("IntervalOfBelethSpawn", 192);
 			BELETH_SPAWN_RANDOM = beleth_load.getInt("RandomOfBelethSpawn", 148);
-			BELETH_MIN_PLAYERS = beleth_load.getInt("BelethMinPlayers", 36);
+			BELETH_MIN_PLAYERS = beleth_load.getInt("BelethMinPlayers", 4);
 			
 			// Load FRINTEZZA_CONFIG L2Properties file (if exists)
 			final PropertiesParser frintezza_load = new PropertiesParser(FRINTEZZA_CONFIG);
 			
-			MIN_PLAYER_TO_FE = frintezza_load.getInt("MinPlayers", 36);
+			MIN_PLAYER_TO_FE = frintezza_load.getInt("MinPlayers", 4);
 			MAX_PLAYER_TO_FE = frintezza_load.getInt("MaxPlayers", 45);
 			MIN_LEVEL_TO_FE = frintezza_load.getInt("MinLevel", 80);
 			
 			// Load TIAT_CONFIG L2Properties file (if exists)
 			final PropertiesParser tiat_load = new PropertiesParser(TIAT_CONFIG);
 			
-			MIN_PLAYER_TO_TIAT = tiat_load.getInt("MinPlayers", 36);
+			MIN_PLAYER_TO_TIAT = tiat_load.getInt("MinPlayers", 4);
 			MAX_PLAYER_TO_TIAT = tiat_load.getInt("MaxPlayers", 45);
 			MIN_LEVEL_TO_TIAT = tiat_load.getInt("MinLevel", 75);
 			
@@ -2718,21 +2718,21 @@ public final class Config extends AbstractConfigs
 			final PropertiesParser zaken_load = new PropertiesParser(ZAKEN_CONFIG);
 			
 			ZAKEN_MIN_LEVEL_DAYTIME_60 = zaken_load.getInt("ZakenMinLevelDaytime60", 55);
-			ZAKEN_MIN_MEMBERS_DAYTIME_60 = zaken_load.getInt("ZakenMinMembersDaytime60", 9);
+			ZAKEN_MIN_MEMBERS_DAYTIME_60 = zaken_load.getInt("ZakenMinMembersDaytime60", 2);
 			ZAKEN_MAX_MEMBERS_DAYTIME_60 = zaken_load.getInt("ZakenMaxMembersDaytime60", 27);
 			ZAKEN_MIN_LEVEL_DAYTIME_83 = zaken_load.getInt("ZakenMinLevelDaytime83", 78);
-			ZAKEN_MIN_MEMBERS_DAYTIME_83 = zaken_load.getInt("ZakenMinMembersDaytime83", 9);
+			ZAKEN_MIN_MEMBERS_DAYTIME_83 = zaken_load.getInt("ZakenMinMembersDaytime83", 2);
 			ZAKEN_MAX_MEMBERS_DAYTIME_83 = zaken_load.getInt("ZakenMaxMembersDaytime83", 27);
 			
-			ZAKEN_MINMEMBERS_NIGHTTIME = zaken_load.getInt("ZakenMinMembersNighttime", 72);
+			ZAKEN_MINMEMBERS_NIGHTTIME = zaken_load.getInt("ZakenMinMembersNighttime", 2);
 			ZAKEN_MAXMEMBERS_NIGHTTIME = zaken_load.getInt("ZakenMaxMembersNighttime", 450);
 			
 			// Load DESTRUCTION_BOSSES_CONFIG L2Properties file (if exists)
 			final PropertiesParser destr_load = new PropertiesParser(DESTRUCTION_BOSSES_CONFIG);
 			
 			CHANGE_STATUS = destr_load.getInt("ChangeStatus", 30);
-			CHANCE_SPAWN = destr_load.getInt("ChanceSpawn", 50);
-			RESPAWN_TIME = destr_load.getInt("RespawnTime", 720);
+			CHANCE_SPAWN = destr_load.getInt("ChanceSpawn", 90);
+			RESPAWN_TIME = destr_load.getInt("RespawnTime", 360);
 			
 			// Load DROPS_CONFIG L2Properties file (if exists)
 			final PropertiesParser dropsload = new PropertiesParser(DROPS_CONFIG);
@@ -2752,13 +2752,13 @@ public final class Config extends AbstractConfigs
 			final PropertiesParser soi_load = new PropertiesParser(EKIMUS_CONFIG);
 			
 			SOI_EKIMUS_KILL_COUNT = soi_load.getInt("EkimusKillCount", 5);
-			EROSION_ATTACK_MIN_PLAYERS = soi_load.getInt("MinEroAttPlayers", 18);
+			EROSION_ATTACK_MIN_PLAYERS = soi_load.getInt("MinEroAttPlayers", 4);
 			EROSION_ATTACK_MAX_PLAYERS = soi_load.getInt("MaxEroAttPlayers", 27);
-			EROSION_DEFENCE_MIN_PLAYERS = soi_load.getInt("MinEroDefPlayers", 18);
+			EROSION_DEFENCE_MIN_PLAYERS = soi_load.getInt("MinEroDefPlayers", 4);
 			EROSION_DEFENCE_MAX_PLAYERS = soi_load.getInt("MaxEroDefPlayers", 27);
-			HEART_ATTACK_MIN_PLAYERS = soi_load.getInt("MinHeaAttPlayers", 18);
+			HEART_ATTACK_MIN_PLAYERS = soi_load.getInt("MinHeaAttPlayers", 4);
 			HEART_ATTACK_MAX_PLAYERS = soi_load.getInt("MaxHeaAttPlayers", 27);
-			HEART_DEFENCE_MIN_PLAYERS = soi_load.getInt("MinHeaDefPlayers", 18);
+			HEART_DEFENCE_MIN_PLAYERS = soi_load.getInt("MinHeaDefPlayers", 4);
 			HEART_DEFENCE_MAX_PLAYERS = soi_load.getInt("MaxHeaDefPlayers", 27);
 			
 			// Gracia Seeds

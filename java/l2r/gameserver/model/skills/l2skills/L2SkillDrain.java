@@ -173,6 +173,11 @@ public class L2SkillDrain extends L2Skill
 				
 				target.reduceCurrentHp(damage, activeChar, this);
 				
+				if (mcrit && activeChar.isPlayer())
+				{
+					activeChar.getActingPlayer().getCounters().onMCHit();
+				}
+				
 				// Maybe launch chance skills on us
 				if (activeChar.getChanceSkills() != null)
 				{

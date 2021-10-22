@@ -18,6 +18,7 @@
  */
 package l2r.gameserver.network.clientpackets;
 
+import l2r.features.achievementEngine.Achievements;
 import l2r.gameserver.model.actor.instance.L2ClassMasterInstance;
 import l2r.gameserver.model.actor.instance.L2PcInstance;
 import l2r.gameserver.model.quest.Quest;
@@ -44,12 +45,27 @@ public class RequestTutorialLinkHtml extends L2GameClientPacket
 			return;
 		}
 		
-		L2ClassMasterInstance.onTutorialLink(player, _bypass);
-		
-		final QuestState qs = player.getQuestState(Quest.TUTORIAL);
-		if (qs != null)
+		if (_bypass.startsWith("_bbs_achivments"))
 		{
-			qs.getQuest().notifyEvent(_bypass, null, player);
+			_bypass = _bypass.replaceAll("%", " ");
+			
+			if (_bypass.length() < 5)
+			{
+				_log.warn("Bad Script bypass!");
+				return;
+			}
+			
+			Achievements.getInstance().usebypass(player, _bypass, null);
+		}
+		else
+		{
+			L2ClassMasterInstance.onTutorialLink(player, _bypass);
+			
+			final QuestState qs = player.getQuestState(Quest.TUTORIAL);
+			if (qs != null)
+			{
+				qs.getQuest().notifyEvent(_bypass, null, player);
+			}
 		}
 	}
 	

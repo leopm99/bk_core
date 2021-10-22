@@ -33,6 +33,7 @@ import l2r.FloodProtectorsConfig;
 import l2r.L2DatabaseFactory;
 import l2r.Server;
 import l2r.UPnPService;
+import l2r.features.achievementEngine.Achievements;
 import l2r.features.sellBuffEngine.BuffShopManager;
 import l2r.features.sellBuffEngine.configs.impl.BuffShopConfigs;
 import l2r.gameserver.cache.HtmCache;
@@ -397,6 +398,7 @@ public class GameServer
 		printSection("Sunrise Systems");
 		BuffShopManager.getInstance().restoreOfflineTraders();
 		SunriseServerMods.getInstance().checkSunriseMods();
+		Achievements.getInstance();
 		
 		if (DropCalculatorConfigs.ENABLE_DROP_CALCULATOR)
 		{

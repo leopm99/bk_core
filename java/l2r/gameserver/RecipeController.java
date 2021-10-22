@@ -415,6 +415,7 @@ public class RecipeController
 			{
 				rewardPlayer(); // and immediately puts created item in its place
 				updateMakeInfo(true);
+				_target.getCounters().onGoodCraft();
 				
 				if (LeaderboardsConfigs.RANK_CRAFT_ENABLED && (_target != _player) && (_recipeList.getSuccessRate() < 100))
 				{
@@ -440,6 +441,7 @@ public class RecipeController
 				else
 				{
 					_target.sendPacket(SystemMessageId.ITEM_MIXING_FAILED);
+					_target.getCounters().onFailCraft();
 					
 					if (LeaderboardsConfigs.RANK_CRAFT_ENABLED && (_target != _player) && (_recipeList.getSuccessRate() < 100))
 					{

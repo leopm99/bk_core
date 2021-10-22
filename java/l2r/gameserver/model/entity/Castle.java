@@ -44,6 +44,7 @@ import l2r.gameserver.instancemanager.TerritoryWarManager;
 import l2r.gameserver.instancemanager.TerritoryWarManager.Territory;
 import l2r.gameserver.instancemanager.ZoneManager;
 import l2r.gameserver.model.L2Clan;
+import l2r.gameserver.model.L2ClanMember;
 import l2r.gameserver.model.L2Object;
 import l2r.gameserver.model.L2SkillLearn;
 import l2r.gameserver.model.TowerSpawn;
@@ -550,6 +551,15 @@ public final class Castle extends AbstractResidence
 				giveResidentialSkills(member);
 				member.sendSkillList();
 			}
+			
+			for (L2ClanMember ll : clan.getLeader().getClan().getMembers())
+			{
+				if (ll.isOnline())
+				{
+					ll.getPlayerInstance().getCounters().onSiegeWin();
+				}
+			}
+			
 		}
 	}
 	

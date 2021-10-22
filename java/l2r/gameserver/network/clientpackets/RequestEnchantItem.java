@@ -227,6 +227,18 @@ public final class RequestEnchantItem extends L2GameClientPacket
 					}
 					activeChar.sendPacket(new EnchantResult(0, 0, 0));
 					showEnchantAnimation(activeChar, item.getEnchantLevel());
+					
+					activeChar.getCounters().onEnchant(item.getEnchantLevel());
+					if (scrollTemplate.isBlessed())
+					{
+						activeChar.getCounters().onBlessedScrollSucceed();
+					}
+					
+					if (!scrollTemplate.isBlessed() && !scrollTemplate.isSafe())
+					{
+						activeChar.getCounters().onNormalScrollSucceed();
+					}
+					
 					AntibotSystem.sendEnchantBotSignal(activeChar);
 					
 					if (Config.LOG_ITEM_ENCHANTS)

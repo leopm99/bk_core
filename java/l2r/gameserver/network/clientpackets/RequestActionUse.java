@@ -21,6 +21,7 @@ package l2r.gameserver.network.clientpackets;
 import java.util.Arrays;
 
 import l2r.Config;
+import l2r.features.achievementEngine.Achievements;
 import l2r.gameserver.data.xml.impl.ActionData;
 import l2r.gameserver.handler.IPlayerActionHandler;
 import l2r.gameserver.handler.PlayerActionHandler;
@@ -118,6 +119,11 @@ public final class RequestActionUse extends L2GameClientPacket
 		
 		switch (_actionId)
 		{
+			
+			case 1000008:
+				Achievements.getInstance().generatePagr(activeChar);
+				break;
+			
 			default:
 				_log.warn(activeChar.getName() + ": unhandled action type " + _actionId);
 				break;

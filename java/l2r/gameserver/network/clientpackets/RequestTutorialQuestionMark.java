@@ -18,6 +18,7 @@
  */
 package l2r.gameserver.network.clientpackets;
 
+import l2r.features.achievementEngine.AchievementNotification;
 import l2r.gameserver.model.actor.instance.L2ClassMasterInstance;
 import l2r.gameserver.model.actor.instance.L2PcInstance;
 import l2r.gameserver.model.quest.Quest;
@@ -44,12 +45,19 @@ public class RequestTutorialQuestionMark extends L2GameClientPacket
 			return;
 		}
 		
-		L2ClassMasterInstance.onTutorialQuestionMark(player, _number);
-		
-		final QuestState qs = player.getQuestState(Quest.TUTORIAL);
-		if (qs != null)
+		if (!player.getVarB("noNotification") && ((_number == 100) || (_number == 200) || (_number == 300)))
 		{
-			qs.getQuest().notifyEvent("QM" + _number + "", null, player);
+			AchievementNotification.onTutorialQuestionMark(player, _number);
+		}
+		else
+		{
+			L2ClassMasterInstance.onTutorialQuestionMark(player, _number);
+			
+			final QuestState qs = player.getQuestState(Quest.TUTORIAL);
+			if (qs != null)
+			{
+				qs.getQuest().notifyEvent("QM" + _number + "", null, player);
+			}
 		}
 	}
 	

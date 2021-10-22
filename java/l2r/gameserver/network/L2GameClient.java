@@ -571,6 +571,14 @@ public class L2GameClient extends MMOClient<MMOConnection<L2GameClient>>
 					ps.setInt(2, objid);
 					ps.execute();
 				}
+				
+				try (PreparedStatement statement = con.prepareStatement("DELETE FROM character_counters WHERE char_id=?"))
+				{
+					statement.setInt(1, objid);
+					statement.execute();
+					statement.close();
+				}
+				
 			}
 			
 			// vGodFather

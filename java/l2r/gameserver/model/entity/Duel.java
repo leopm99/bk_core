@@ -358,7 +358,7 @@ public class Duel
 		ThreadPoolManager.getInstance().scheduleGeneral(() ->
 		{
 			_playerConditions.values().forEach(c -> c.restoreCondition());
-		} , _partyDuel ? PARTY_DUEL_TELEPORT_BACK_TIME : 1000);
+		}, _partyDuel ? PARTY_DUEL_TELEPORT_BACK_TIME : 1000);
 		
 		ThreadPoolManager.getInstance().scheduleGeneral(() -> clear(), _partyDuel ? PARTY_DUEL_TELEPORT_BACK_TIME : 1000);
 	}
@@ -606,6 +606,7 @@ public class Duel
 					sm = SystemMessage.getSystemMessage(SystemMessageId.C1_HAS_WON_THE_DUEL);
 				}
 				sm.addString(_leaderA.getName());
+				_leaderA.getCounters().onDuelWin();
 				break;
 			case TEAM_1_SURRENDER:
 			case TEAM_2_WIN:
@@ -618,6 +619,7 @@ public class Duel
 					sm = SystemMessage.getSystemMessage(SystemMessageId.C1_HAS_WON_THE_DUEL);
 				}
 				sm.addString(_leaderB.getName());
+				_leaderB.getCounters().onDuelWin();
 				break;
 			case CANCELED:
 			case TIMEOUT:

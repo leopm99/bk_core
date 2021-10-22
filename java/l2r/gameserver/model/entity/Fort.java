@@ -48,6 +48,7 @@ import l2r.gameserver.instancemanager.CastleManager;
 import l2r.gameserver.instancemanager.FortManager;
 import l2r.gameserver.instancemanager.ZoneManager;
 import l2r.gameserver.model.L2Clan;
+import l2r.gameserver.model.L2ClanMember;
 import l2r.gameserver.model.L2Object;
 import l2r.gameserver.model.L2Spawn;
 import l2r.gameserver.model.L2World;
@@ -445,6 +446,15 @@ public final class Fort extends AbstractResidence
 			giveResidentialSkills(member);
 			member.sendSkillList();
 		}
+		
+		for (L2ClanMember ll : clan.getLeader().getClan().getMembers())
+		{
+			if (ll.isOnline())
+			{
+				ll.getPlayerInstance().getCounters().onFortWin();
+			}
+		}
+		
 		return true;
 	}
 	

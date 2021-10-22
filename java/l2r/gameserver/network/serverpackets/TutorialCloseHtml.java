@@ -28,7 +28,7 @@ public class TutorialCloseHtml extends L2GameServerPacket
 {
 	public static final TutorialCloseHtml STATIC_PACKET = new TutorialCloseHtml();
 	
-	private TutorialCloseHtml()
+	public TutorialCloseHtml()
 	{
 	}
 	
