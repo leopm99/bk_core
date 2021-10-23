@@ -31,6 +31,7 @@ import java.util.logging.LogManager;
 import l2r.Config;
 import l2r.FloodProtectorsConfig;
 import l2r.L2DatabaseFactory;
+import l2r.RebirthEngineConfigs;
 import l2r.Server;
 import l2r.UPnPService;
 import l2r.features.achievementEngine.Achievements;
@@ -542,6 +543,7 @@ public class GameServer
 		Config.load();
 		ServerTypeConfigs.getInstance().loadConfigs();
 		BuffShopConfigs.getInstance().loadConfigs();
+		RebirthEngineConfigs.getInstance().loadConfigs();
 		FloodProtectorsConfig.load();
 		// Sunrise configs load section
 		DropCalculatorConfigs.getInstance().loadConfigs();
