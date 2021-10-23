@@ -92,7 +92,7 @@ public final class RequestAcquireSkill extends L2GameClientPacket
 			return;
 		}
 		
-		if ((_level < 1) || (_level > 1000) || (_id < 1) || (_id > 32000))
+		if ((_level < 1) || (_level > 1000) || (_id < 1) || (_id > 36000))
 		{
 			Util.handleIllegalPlayerAction(activeChar, "Wrong Packet Data in Aquired Skill", Config.DEFAULT_PUNISH);
 			_log.warn("Recived Wrong Packet Data in Aquired Skill - id: " + _id + " level: " + _level + " for " + activeChar);

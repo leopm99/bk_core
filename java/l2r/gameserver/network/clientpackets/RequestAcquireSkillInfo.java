@@ -18,6 +18,7 @@
  */
 package l2r.gameserver.network.clientpackets;
 
+import l2r.RebirthEngineConfigs;
 import l2r.gameserver.data.xml.impl.SkillData;
 import l2r.gameserver.data.xml.impl.SkillTreesData;
 import l2r.gameserver.model.ClanPrivilege;
@@ -115,7 +116,7 @@ public final class RequestAcquireSkillInfo extends L2GameClientPacket
 			}
 			case CLASS:
 			{
-				if (trainer.getTemplate().canTeach(activeChar.getLearningClass()))
+				if (trainer.getTemplate().canTeach(activeChar.getLearningClass()) || (trainer.getId() == RebirthEngineConfigs.REBIRTH_SKILL_SELLER_ID))
 				{
 					final int customSp = s.getCalculatedLevelUpSp(activeChar.getClassId(), activeChar.getLearningClass());
 					sendPacket(new AcquireSkillInfo(_skillType, s, customSp));

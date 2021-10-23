@@ -21,6 +21,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import l2r.Config;
+import l2r.RebirthEngineConfigs;
 import l2r.gameserver.GameTimeController;
 import l2r.gameserver.GeoData;
 import l2r.gameserver.ThreadPoolManager;
@@ -5769,6 +5770,13 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 	
 	public L2Skill removeSkill(int skillId, boolean cancelEffect)
 	{
+		
+		// skip rebirth skills
+		if (RebirthEngineConfigs.REBIRTH_SKILL_IDS.contains(skillId))
+		{
+			return null;
+		}
+		
 		// Remove the skill from the L2Character _skills
 		L2Skill oldSkill = _skills.remove(skillId);
 		// Remove all its Func objects from the L2Character calculator set
