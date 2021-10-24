@@ -2299,5 +2299,17 @@ public final class L2ItemInstance extends L2Object
 		this.visualItemId = visualItemId;
 	}
 	
+	private int oldVisualItemId = 0;
+	
+	public int getOldVisualItemId()
+	{
+		return oldVisualItemId;
+	}
+	
+	public void setOldVisualItemId(int oVisual)
+	{
+		this.oldVisualItemId = oVisual;
+	}
+	
 	public boolean fromMob;
 }

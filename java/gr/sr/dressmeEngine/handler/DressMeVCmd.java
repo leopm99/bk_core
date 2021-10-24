@@ -3,7 +3,9 @@ package gr.sr.dressmeEngine.handler;
 import java.util.HashMap;
 import java.util.Map;
 
+import l2r.gameserver.ThreadPoolManager;
 import l2r.gameserver.cache.HtmCache;
+import l2r.gameserver.custom.TryDressMeHat;
 import l2r.gameserver.data.xml.impl.ArmorSetsData;
 import l2r.gameserver.data.xml.impl.ItemData;
 import l2r.gameserver.handler.IVoicedCommandHandler;
@@ -13,6 +15,7 @@ import l2r.gameserver.model.itemcontainer.Inventory;
 import l2r.gameserver.model.items.L2Item;
 import l2r.gameserver.model.items.instance.L2ItemInstance;
 import l2r.gameserver.model.items.type.ItemType;
+import l2r.gameserver.network.clientpackets.RequestPreviewItem;
 import l2r.gameserver.network.serverpackets.NpcHtmlMessage;
 
 import gr.sr.dressmeEngine.DressMeHandler;
@@ -94,7 +97,14 @@ public class DressMeVCmd implements IVoicedCommandHandler
 		"dressme-hat",
 		"dress-hat",
 		"dress-hatpage",
-		"undressme-hat"
+		"undressme-hat",
+		
+		"dress-tryarmor",
+		"dress-trycloak",
+		"dress-tryshield",
+		"dress-tryweapon",
+		"dress-tryhat"
+	
 	};
 	
 	@Override
@@ -585,6 +595,7 @@ public class DressMeVCmd implements IVoicedCommandHandler
 				html = html.replace("{my_feet_icon}", my_feet == null ? "icon.NOIMAGE" : my_feet.getItem().getIcon());
 				
 				html = html.replace("{bypass}", "bypass -h voice .dress-armor " + set);
+				html = html.replace("{bypassTry}", "bypass -h voice .dress-tryarmor " + set);
 				html = html.replace("{name}", dress.getName());
 				html = html.replace("{price}", Util.formatPay(player, dress.getPriceCount(), dress.getPriceId()));
 				
@@ -635,6 +646,7 @@ public class DressMeVCmd implements IVoicedCommandHandler
 				html = html.replace("{my_cloak_icon}", my_cloak == null ? "icon.NOIMAGE" : my_cloak.getItem().getIcon());
 				
 				html = html.replace("{bypass}", "bypass -h voice .dress-cloak " + cloak.getId());
+				html = html.replace("{bypassTry}", "bypass -h voice .dress-trycloak " + cloak.getId());
 				html = html.replace("{name}", cloak.getName());
 				html = html.replace("{price}", Util.formatPay(player, cloak.getPriceCount(), cloak.getPriceId()));
 				
@@ -661,6 +673,7 @@ public class DressMeVCmd implements IVoicedCommandHandler
 				html = html.replace("{my_shield_icon}", my_shield == null ? "icon.NOIMAGE" : my_shield.getItem().getIcon());
 				
 				html = html.replace("{bypass}", "bypass -h voice .dress-shield " + shield.getId());
+				html = html.replace("{bypassTry}", "bypass -h voice .dress-tryshield " + shield.getId());
 				html = html.replace("{name}", shield.getName());
 				html = html.replace("{price}", Util.formatPay(player, shield.getPriceCount(), shield.getPriceId()));
 				
@@ -687,6 +700,7 @@ public class DressMeVCmd implements IVoicedCommandHandler
 				html = html.replace("{my_weapon_icon}", my_weapon == null ? "icon.NOIMAGE" : my_weapon.getItem().getIcon());
 				
 				html = html.replace("{bypass}", "bypass -h voice .dress-weapon " + weapon.getId());
+				html = html.replace("{bypassTry}", "bypass -h voice .dress-tryweapon " + weapon.getId());
 				html = html.replace("{name}", weapon.getName());
 				html = html.replace("{price}", Util.formatPay(player, weapon.getPriceCount(), weapon.getPriceId()));
 				
@@ -725,6 +739,7 @@ public class DressMeVCmd implements IVoicedCommandHandler
 				html = html.replace("{my_hat_icon}", my_hat == null ? "icon.NOIMAGE" : my_hat.getItem().getIcon());
 				
 				html = html.replace("{bypass}", "bypass -h voice .dress-hat " + hat.getId());
+				html = html.replace("{bypassTry}", "bypass -h voice .dress-tryhat " + hat.getId());
 				html = html.replace("{name}", hat.getName());
 				html = html.replace("{price}", Util.formatPay(player, hat.getPriceCount(), hat.getPriceId()));
 				
@@ -1043,6 +1058,124 @@ public class DressMeVCmd implements IVoicedCommandHandler
 			player.broadcastUserInfo();
 			useVoicedCommand("dressme", player, null);
 			return true;
+		}
+		
+		else if (command.equals("dress-tryweapon"))
+		{
+			final int set = Integer.parseInt(args.split(" ")[0]);
+			
+			DressMeWeaponData weapon_data = DressMeWeaponHolder.getInstance().getWeapon(set);
+			if (weapon_data == null)
+			{
+				return false;
+			}
+			
+			final Map<Integer, Integer> itemList = new HashMap<>();
+			itemList.put(Inventory.PAPERDOLL_RHAND, weapon_data.getId());
+			player.sendShopPreviewInfoPacket((itemList));
+			
+			// Remove the try items in 6 seconds
+			ThreadPoolManager.getInstance().scheduleGeneral(new RequestPreviewItem.RemoveWearItemsTask(player), 6 * 1000);
+			
+			useVoicedCommand("dress-weaponpage", player, args);
+			return false;
+		}
+		else if (command.equals("dress-tryarmor"))
+		{
+			final int set = Integer.parseInt(args.split(" ")[0]);
+			
+			DressMeArmorData dress = DressMeArmorHolder.getInstance().getArmor(set);
+			if (dress == null)
+			{
+				return false;
+			}
+			
+			final Map<Integer, Integer> itemList = new HashMap<>();
+			itemList.put(Inventory.PAPERDOLL_CHEST, dress.getChest());
+			itemList.put(Inventory.PAPERDOLL_LEGS, (dress.getLegs() > 0 ? dress.getLegs() : dress.getChest()));
+			itemList.put(Inventory.PAPERDOLL_GLOVES, dress.getGloves());
+			itemList.put(Inventory.PAPERDOLL_FEET, dress.getFeet());
+			player.sendShopPreviewInfoPacket(itemList);
+			
+			// Remove the try items in 6 seconds
+			ThreadPoolManager.getInstance().scheduleGeneral(new RequestPreviewItem.RemoveWearItemsTask(player), 6 * 1000);
+			
+			useVoicedCommand("dress-armorpage", player, args);
+			return false;
+		}
+		else if (command.equals("dress-trycloak"))
+		{
+			final int set = Integer.parseInt(args.split(" ")[0]);
+			DressMeCloakData cloak_data = DressMeCloakHolder.getInstance().getCloak(set);
+			if (cloak_data == null)
+			{
+				return false;
+			}
+			
+			final Map<Integer, Integer> itemList = new HashMap<>();
+			itemList.put(Inventory.PAPERDOLL_CLOAK, cloak_data.getCloakId());
+			player.sendShopPreviewInfoPacket(itemList);
+			
+			// Remove the try items in 6 seconds
+			ThreadPoolManager.getInstance().scheduleGeneral(new RequestPreviewItem.RemoveWearItemsTask(player), 6 * 1000);
+			
+			useVoicedCommand("dress-cloakpage", player, args);
+			return false;
+		}
+		else if (command.equals("dress-tryshield"))
+		{
+			final int shield_id = Integer.parseInt(args.split(" ")[0]);
+			
+			DressMeShieldData shield_data = DressMeShieldHolder.getInstance().getShield(shield_id);
+			if (shield_data == null)
+			{
+				return false;
+			}
+			
+			final Map<Integer, Integer> itemList = new HashMap<>();
+			itemList.put(Inventory.PAPERDOLL_LHAND, shield_data.getShieldId());
+			player.sendShopPreviewInfoPacket((itemList));
+			
+			// Remove the try items in 6 seconds
+			ThreadPoolManager.getInstance().scheduleGeneral(new RequestPreviewItem.RemoveWearItemsTask(player), 6 * 1000);
+			
+			useVoicedCommand("dress-shieldpage", player, args);
+			return false;
+		}
+		else if (command.equals("dress-tryhat"))
+		{
+			final int hat_id = Integer.parseInt(args.split(" ")[0]);
+			Inventory inv = player.getInventory();
+			
+			DressMeHatData hat_data = DressMeHatHolder.getInstance().getHat(hat_id);
+			if (hat_data == null)
+			{
+				return false;
+			}
+			
+			L2ItemInstance hat = null;
+			
+			switch (hat_data.getSlot())
+			{
+				case 1: // HAIR
+				case 3: // FULL HAIR
+					hat = inv.getPaperdollItem(Inventory.PAPERDOLL_HAIR);
+					break;
+				case 2: // HAIR2
+					hat = inv.getPaperdollItem(Inventory.PAPERDOLL_HAIR2);
+					break;
+			}
+			
+			if (hat != null)
+			{
+				hat.setOldVisualItemId(hat.getVisualItemId());
+				DressMeHandler.visualityHat(player, hat, hat_data.getHatId());
+				player.broadcastUserInfo();
+				// Remove the try items in 6 seconds
+				ThreadPoolManager.getInstance().scheduleGeneral(new TryDressMeHat(player, hat), 6 * 1000);
+			}
+			useVoicedCommand("dress-hatpage", player, args);
+			return false;
 		}
 		
 		return false;

@@ -39,6 +39,12 @@ public class DressMeHandler
 		player.broadcastUserInfo();
 	}
 	
+	public static void visualityHat(L2PcInstance player, L2ItemInstance item, int visual)
+	{
+		item.setVisualItemId(visual);
+		player.broadcastUserInfo();
+	}
+	
 	public static void updateVisualInDb(L2ItemInstance item, int visual)
 	{
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();

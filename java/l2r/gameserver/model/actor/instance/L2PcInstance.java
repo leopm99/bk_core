@@ -65,6 +65,7 @@ import l2r.gameserver.ai.L2SummonAI;
 import l2r.gameserver.cache.WarehouseCacheManager;
 import l2r.gameserver.communitybbs.BB.Forum;
 import l2r.gameserver.communitybbs.Managers.ForumsBBSManager;
+import l2r.gameserver.custom.CustomMethodes;
 import l2r.gameserver.dao.factory.impl.DAOFactory;
 import l2r.gameserver.data.sql.CharNameTable;
 import l2r.gameserver.data.sql.CharSummonTable;
@@ -301,6 +302,7 @@ import l2r.gameserver.network.serverpackets.RelationChanged;
 import l2r.gameserver.network.serverpackets.Ride;
 import l2r.gameserver.network.serverpackets.ServerClose;
 import l2r.gameserver.network.serverpackets.SetupGauge;
+import l2r.gameserver.network.serverpackets.ShopPreviewInfo;
 import l2r.gameserver.network.serverpackets.ShortCutInit;
 import l2r.gameserver.network.serverpackets.SkillCoolTime;
 import l2r.gameserver.network.serverpackets.SkillList;
@@ -11159,6 +11161,15 @@ public final class L2PcInstance extends L2Playable
 		
 		try
 		{
+			CustomMethodes.checkForOldVisuals(this);
+		}
+		catch (Exception e)
+		{
+			_log.error("deleteMe()", e);
+		}
+		
+		try
+		{
 			for (L2Effect effect : getAllEffects())
 			{
 				if (effect.getSkill().isToggle())
@@ -14511,6 +14522,11 @@ public final class L2PcInstance extends L2Playable
 	private void loadVariables()
 	{
 		_sunriseVariables.loadVariables();
+	}
+	
+	public void sendShopPreviewInfoPacket(Map<Integer, Integer> itemList)
+	{
+		sendPacket(new ShopPreviewInfo(itemList));
 	}
 	
 	/**
