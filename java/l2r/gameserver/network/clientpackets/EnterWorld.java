@@ -19,6 +19,7 @@
 package l2r.gameserver.network.clientpackets;
 
 import l2r.Config;
+import l2r.features.museum.MuseumManager;
 import l2r.gameserver.LoginServerThread;
 import l2r.gameserver.SevenSigns;
 import l2r.gameserver.cache.HtmCache;
@@ -641,6 +642,8 @@ public class EnterWorld extends L2GameClientPacket
 				}
 			}
 		}
+		
+		MuseumManager.getInstance().giveReward(activeChar);
 		
 		// Unstuck players that had client open when server crashed.
 		activeChar.sendPacket(ActionFailed.STATIC_PACKET);

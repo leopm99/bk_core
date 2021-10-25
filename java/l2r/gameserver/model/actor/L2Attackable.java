@@ -370,6 +370,13 @@ public class L2Attackable extends L2Npc
 				final int respawnTime = Config.MINIONS_RESPAWN_TIME.containsKey(getId()) ? Config.MINIONS_RESPAWN_TIME.get(getId()) * 1000 : -1;
 				mob.getLeader().getMinionList().onMinionDie(mob, respawnTime);
 			}
+			
+			if (killer instanceof L2PcInstance)
+			{
+				L2PcInstance player = (L2PcInstance) killer;
+				player.getMuseumPlayer().addData("monster_kills", 1);
+			}
+			
 		}
 		return true;
 	}
@@ -528,6 +535,7 @@ public class L2Attackable extends L2Npc
 								final long addexp = Math.round(attacker.calcStat(Stats.EXPSP_RATE, exp, null, null));
 								final int addsp = (int) attacker.calcStat(Stats.EXPSP_RATE, sp, null, null);
 								
+								attacker.getMuseumPlayer().addData("monster_kill_xp", addexp);
 								attacker.addExpAndSp(addexp, addsp, useVitalityRate());
 								if (addexp > 0)
 								{

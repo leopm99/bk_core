@@ -108,6 +108,8 @@ public final class L2GrandBossInstance extends L2MonsterInstance
 					{
 						Hero.getInstance().setRBkilled(member.getObjectId(), getId());
 					}
+					
+					member.getMuseumPlayer().addData("raid_kill_" + getId(), 1);
 				}
 			}
 			else
@@ -117,6 +119,7 @@ public final class L2GrandBossInstance extends L2MonsterInstance
 				{
 					Hero.getInstance().setRBkilled(player.getObjectId(), getId());
 				}
+				player.getMuseumPlayer().addData("raid_kill_" + getId(), 1);
 			}
 		}
 		return true;

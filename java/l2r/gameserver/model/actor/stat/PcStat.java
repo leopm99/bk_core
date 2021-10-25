@@ -219,6 +219,7 @@ public class PcStat extends PlayableStat
 			return false;
 		}
 		
+		activeChar.getMuseumPlayer().addData("xp", addToExp);
 		SystemMessage sm = null;
 		if ((addToExp == 0) && (addToSp != 0))
 		{

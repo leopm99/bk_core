@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import l2r.Config;
+import l2r.features.museum.L2MuseumStatueInstance;
 import l2r.gameserver.ItemsAutoDestroy;
 import l2r.gameserver.SevenSigns;
 import l2r.gameserver.SevenSignsFestival;
@@ -331,7 +332,7 @@ public class L2Npc extends L2Character
 	 */
 	public boolean hasRandomAnimation()
 	{
-		return ((Config.MAX_NPC_ANIMATION > 0) && _isRandomAnimationEnabled && !getAiType().equals(AIType.CORPSE));
+		return ((Config.MAX_NPC_ANIMATION > 0) && _isRandomAnimationEnabled && !getAiType().equals(AIType.CORPSE)) && !(this instanceof L2MuseumStatueInstance);
 	}
 	
 	/**
@@ -1598,7 +1599,7 @@ public class L2Npc extends L2Character
 			{
 				deleteMe();
 			}
-		} , delay);
+		}, delay);
 		return this;
 	}
 	

@@ -110,7 +110,8 @@ public enum InstanceType
 	L2AioNpcInstance(L2Npc),
 	L2ServicesManagerInstance(L2NpcInstance),
 	L2DonateManagerInstance(L2Npc),
-	L2CustomGatekeeperInstance(L2Npc);
+	L2CustomGatekeeperInstance(L2Npc),
+	L2MuseumStatueInstance(L2Npc);
 	
 	private final InstanceType _parent;
 	private final long _typeL;

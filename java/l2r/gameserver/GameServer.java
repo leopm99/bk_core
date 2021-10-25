@@ -35,6 +35,7 @@ import l2r.RebirthEngineConfigs;
 import l2r.Server;
 import l2r.UPnPService;
 import l2r.features.achievementEngine.Achievements;
+import l2r.features.museum.MuseumManager;
 import l2r.features.sellBuffEngine.BuffShopManager;
 import l2r.features.sellBuffEngine.configs.impl.BuffShopConfigs;
 import l2r.gameserver.cache.HtmCache;
@@ -388,6 +389,7 @@ public class GameServer
 		AutoSpawnHandler.getInstance();
 		
 		FaenorScriptEngine.getInstance();
+		MuseumManager.getInstance();
 		TaskManager.getInstance();
 		AntiFeedManager.getInstance().registerEvent(AntiFeedManager.GAME_ID);
 		PunishmentManager.getInstance();

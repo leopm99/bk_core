@@ -1152,8 +1152,8 @@ public final class QuestState
 				setRestartTime();
 				break;
 			}
-				// case ONE_TIME:
-				// case REPEATABLE:
+			// case ONE_TIME:
+			// case REPEATABLE:
 			default:
 			{
 				exitQuest(type == QuestType.REPEATABLE);
@@ -1205,6 +1205,7 @@ public final class QuestState
 		getQuest().removeRegisteredQuestItems(_player);
 		
 		Quest.deleteQuestInDb(this, repeatable);
+		_player.getMuseumPlayer().addData("quests_clear", 1);
 		if (repeatable)
 		{
 			_player.delQuestState(getQuestName());

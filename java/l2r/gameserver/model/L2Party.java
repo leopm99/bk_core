@@ -406,7 +406,7 @@ public class L2Party extends AbstractPlayerGroup
 					_positionPacket.reuse(this);
 				}
 				broadcastPacket(_positionPacket);
-			} , PARTY_POSITION_BROADCAST_INTERVAL.toMillis() / 2, PARTY_POSITION_BROADCAST_INTERVAL.toMillis());
+			}, PARTY_POSITION_BROADCAST_INTERVAL.toMillis() / 2, PARTY_POSITION_BROADCAST_INTERVAL.toMillis());
 		}
 		
 		// vGodFather: Distribution mod
@@ -993,6 +993,7 @@ public class L2Party extends AbstractPlayerGroup
 				
 				addexp = calculateExpSpPartyCutoff(member.getActingPlayer(), topLvl, addexp, addsp, useVitalityRate);
 				
+				member.getMuseumPlayer().addData("monster_kill_xp", addexp);
 				if (addexp > 0)
 				{
 					// vGodFather for nevit system

@@ -175,7 +175,7 @@ public class CharSelectionInfo extends L2GameServerPacket
 		}
 	}
 	
-	private static List<CharSelectInfoPackage> loadCharacterSelectInfo(String loginName)
+	public static List<CharSelectInfoPackage> loadCharacterSelectInfo(String loginName)
 	{
 		final List<CharSelectInfoPackage> characterList = new ArrayList<>();
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
@@ -224,7 +224,7 @@ public class CharSelectionInfo extends L2GameServerPacket
 		}
 	}
 	
-	private static CharSelectInfoPackage restoreChar(ResultSet chardata) throws Exception
+	public static CharSelectInfoPackage restoreChar(ResultSet chardata) throws Exception
 	{
 		int objectId = chardata.getInt("charId");
 		String name = chardata.getString("char_name");

@@ -21,6 +21,7 @@ package l2r.gameserver.network.serverpackets;
 import java.text.DecimalFormat;
 
 import l2r.Config;
+import l2r.features.museum.L2MuseumStatueInstance;
 import l2r.gameserver.data.sql.ClanTable;
 import l2r.gameserver.data.xml.impl.PlayerTemplateData;
 import l2r.gameserver.enums.PcCondOverride;
@@ -38,6 +39,7 @@ import l2r.gameserver.model.actor.instance.L2PcInstance;
 import l2r.gameserver.model.actor.instance.L2TrapInstance;
 import l2r.gameserver.model.actor.templates.L2PcTemplate;
 import l2r.gameserver.model.effects.AbnormalEffect;
+import l2r.gameserver.model.itemcontainer.Inventory;
 import l2r.gameserver.model.zone.type.L2TownZone;
 
 import gr.sr.datatables.FakePcsTable;
@@ -155,11 +157,157 @@ public abstract class AbstractNpcInfo extends L2GameServerPacket
 			_displayEffect = cha.getDisplayEffect();
 		}
 		
+		private static final int[] PAPERDOLL_ORDER = new int[]
+		{
+			Inventory.PAPERDOLL_UNDER,
+			Inventory.PAPERDOLL_HEAD,
+			Inventory.PAPERDOLL_RHAND,
+			Inventory.PAPERDOLL_LHAND,
+			Inventory.PAPERDOLL_GLOVES,
+			Inventory.PAPERDOLL_CHEST,
+			Inventory.PAPERDOLL_LEGS,
+			Inventory.PAPERDOLL_FEET,
+			Inventory.PAPERDOLL_CLOAK,
+			Inventory.PAPERDOLL_RHAND,
+			Inventory.PAPERDOLL_HAIR,
+			Inventory.PAPERDOLL_HAIR2,
+			Inventory.PAPERDOLL_RBRACELET,
+			Inventory.PAPERDOLL_LBRACELET,
+			Inventory.PAPERDOLL_DECO1,
+			Inventory.PAPERDOLL_DECO2,
+			Inventory.PAPERDOLL_DECO3,
+			Inventory.PAPERDOLL_DECO4,
+			Inventory.PAPERDOLL_DECO5,
+			Inventory.PAPERDOLL_DECO6,
+			Inventory.PAPERDOLL_BELT
+		};
+		
+		@SuppressWarnings("unused")
+		
 		@Override
 		protected void writeImpl()
 		{
 			FakePc fpc = FakePcsTable.getInstance().getFakePc(_npc.getId());
-			if (fpc != null)
+			if (_npc instanceof L2MuseumStatueInstance)
+			{
+				L2MuseumStatueInstance statue = (L2MuseumStatueInstance) _npc;
+				writeC(0x31);
+				writeD(_x);
+				writeD(_y);
+				writeD(_z);
+				writeD(0);
+				writeD(_npc.getObjectId());
+				writeS(statue.getCharLooks().getName());
+				writeD(statue.getCharLooks().getRace());
+				writeD(statue.getCharLooks().getSex());
+				writeD(statue.getCharLooks().getBaseClassId());
+				
+				for (int slot : PAPERDOLL_ORDER)
+				{
+					writeD(statue.getCharLooks().getPaperdollItemId(slot));
+				}
+				
+				for (int element : PAPERDOLL_ORDER)
+				{
+					writeD(0);
+				}
+				
+				writeD(0);
+				writeD(0);
+				
+				writeD(0);
+				writeD(0);
+				
+				writeD(_mAtkSpd);
+				writeD(_pAtkSpd);
+				
+				writeD(0x00); // ?
+				
+				writeD(_runSpd);
+				writeD(_walkSpd);
+				writeD(_swimRunSpd);
+				writeD(_swimWalkSpd);
+				writeD(_flyRunSpd);
+				writeD(_flyWalkSpd);
+				writeD(_flyRunSpd);
+				writeD(_flyWalkSpd);
+				writeF(_moveMultiplier);
+				writeF(0);
+				L2PcTemplate cl = PlayerTemplateData.getInstance().getTemplate(statue.getCharLooks().getBaseClassId());
+				writeF(statue.getCharLooks().getSex() == 1 ? cl.getFCollisionRadiusFemale() : cl.getfCollisionRadius());
+				writeF(statue.getCharLooks().getSex() == 1 ? cl.getFCollisionHeightFemale() : cl.getfCollisionHeight());
+				
+				writeD(statue.getCharLooks().getHairStyle());
+				writeD(statue.getCharLooks().getHairColor());
+				writeD(statue.getCharLooks().getFace());
+				
+				writeS(_npc.getTitle());
+				
+				writeD(0);
+				writeD(0);
+				writeD(0);
+				writeD(0);
+				
+				writeC(1); // standing = 1 sitting = 0
+				writeC(0); // running = 1 walking = 0
+				writeC(0);
+				
+				writeC(0);
+				
+				writeC(0); // invisible = 1 visible =0
+				
+				writeC(0); // 1-on Strider, 2-on Wyvern, 3-on Great Wolf, 0-no mount
+				writeC(1);
+				
+				writeH(0);
+				
+				writeC(0);
+				
+				writeD(AbnormalEffect.HOLD_1.getMask());
+				
+				writeC(0);
+				
+				writeH(0); // Blue value for name (0 = white, 255 = pure blue)
+				writeD(0);
+				writeD(statue.getCharLooks().getClassId());
+				writeD(0x00); // ?
+				writeC(statue.getCharLooks().getEnchantEffect());
+				
+				writeC(0);
+				
+				writeD(0);
+				writeC(0); // Symbol on char menu ctrl+I
+				writeC(0); // Hero Aura
+				
+				writeC(0); // 0x01: Fishing Mode (Cant be undone by setting back to 0)
+				writeD(0);
+				writeD(0);
+				writeD(0);
+				
+				writeD(0xFFFFFF);
+				
+				writeD(_heading);
+				
+				writeD(0);
+				writeD(0);
+				
+				writeD(0x7d7d7b);
+				
+				writeD(0);
+				
+				writeD(0);
+				
+				// T1
+				writeD(0);
+				writeD(0);
+				
+				// T2
+				writeD(0x01);
+				
+				// T2.3
+				writeD(0);
+			}
+			else if (fpc != null)
 			{
 				writeC(0x31);
 				writeD(_x);

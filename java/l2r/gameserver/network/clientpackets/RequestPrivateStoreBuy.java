@@ -151,6 +151,7 @@ public final class RequestPrivateStoreBuy extends L2GameClientPacket
 			return;
 		}
 		
+		storePlayer.getMuseumPlayer().addData("private_stores_sales", _items.size());
 		if (storeList.getItemCount() == 0)
 		{
 			storePlayer.setPrivateStoreType(PrivateStoreType.NONE);

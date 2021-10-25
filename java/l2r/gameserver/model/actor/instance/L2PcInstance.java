@@ -51,6 +51,8 @@ import l2r.Config;
 import l2r.L2DatabaseFactory;
 import l2r.features.achievementEngine.Achievements;
 import l2r.features.achievementEngine.IAchievement;
+import l2r.features.museum.MuseumManager;
+import l2r.features.museum.MuseumPlayer;
 import l2r.gameserver.GameTimeController;
 import l2r.gameserver.GeoData;
 import l2r.gameserver.ItemsAutoDestroy;
@@ -384,6 +386,7 @@ public final class L2PcInstance extends L2Playable
 	private volatile boolean _isOnline = false;
 	private long _onlineTime;
 	private long _onlineBeginTime;
+	private long _museumOnlineTime;
 	private long _lastAccess;
 	private long _uptime;
 	private long _zoneRestartLimitTime = 0;
@@ -2845,6 +2848,11 @@ public final class L2PcInstance extends L2Playable
 		_dwarvenRecipeBook.clear();
 	}
 	
+	public void refreshMuseumOnlineTime()
+	{
+		_museumOnlineTime = System.currentTimeMillis();
+	}
+	
 	public long getZoneRestartLimitTime()
 	{
 		return _zoneRestartLimitTime;
@@ -3488,6 +3496,12 @@ public final class L2PcInstance extends L2Playable
 						ward.activate(this, createdItem);
 					}
 				}
+				
+				if (itemId == 57)
+				{
+					getMuseumPlayer().addData("adena", count);
+				}
+				
 				return createdItem;
 			}
 		}
@@ -5467,6 +5481,11 @@ public final class L2PcInstance extends L2Playable
 		
 		AntiFeedManager.getInstance().setLastDeathTime(getObjectId());
 		
+		if (killer instanceof L2Attackable)
+		{
+			getMuseumPlayer().addData("monster_deaths", 1);
+		}
+		
 		getCounters().onDie();
 		
 		return true;
@@ -5714,6 +5733,9 @@ public final class L2PcInstance extends L2Playable
 				
 				setPvpKills(getPvpKills() + 1);
 				
+				getMuseumPlayer().addData("pvp_victories", 1);
+				((L2PcInstance) target).getMuseumPlayer().addData("pvp_defeats", 1);
+				
 				getCounters().onSpree(spreeKills);
 				
 				// Send a Server->Client UserInfo packet to attacker with its Karma and PK Counter
@@ -5746,6 +5768,8 @@ public final class L2PcInstance extends L2Playable
 		if (target.isPlayer())
 		{
 			setPkKills(getPkKills() + 1);
+			getMuseumPlayer().addData("pk_victories", 1);
+			((L2PcInstance) target).getMuseumPlayer().addData("pk_defeats", 1);
 		}
 		
 		// Color system
@@ -7449,6 +7473,8 @@ public final class L2PcInstance extends L2Playable
 						player.getClanPrivileges().clear();
 					}
 					
+					player.refreshMuseumOnlineTime();
+					
 					// Retrieve the name and ID of the other characters assigned to this account.
 					try (PreparedStatement stmt = con.prepareStatement("SELECT charId, char_name FROM characters WHERE account_name=? AND charId<>?"))
 					{
@@ -7518,6 +7544,8 @@ public final class L2PcInstance extends L2Playable
 			player.refreshExpertisePenalty(false);
 			
 			player.restoreFriendList();
+			
+			MuseumManager.getInstance().restoreDataForChar(player);
 			
 			if (Config.STORE_UI_SETTINGS)
 			{
@@ -7678,6 +7706,8 @@ public final class L2PcInstance extends L2Playable
 		}
 		SevenSigns.getInstance().saveSevenSignsData(getObjectId());
 		
+		MuseumManager.getInstance().updateDataForChar(this);
+		
 		final PlayerVariables vars = getScript(PlayerVariables.class);
 		if (vars != null)
 		{
@@ -7749,6 +7779,12 @@ public final class L2PcInstance extends L2Playable
 			{
 				totalOnlineTime += (System.currentTimeMillis() - _onlineBeginTime) / 1000;
 			}
+			
+			if (getMuseumPlayer() != null)
+			{
+				getMuseumPlayer().addData("play_duration", (System.currentTimeMillis() - _museumOnlineTime) / 1000);
+			}
+			_museumOnlineTime = System.currentTimeMillis();
 			
 			statement.setLong(35, totalOnlineTime);
 			statement.setInt(36, getNewbie());
@@ -14616,6 +14652,18 @@ public final class L2PcInstance extends L2Playable
 	public long getCurrentOnlineTime()
 	{
 		return System.currentTimeMillis() - _onlineBeginTime;
+	}
+	
+	MuseumPlayer _mp = null;
+	
+	public MuseumPlayer getMuseumPlayer()
+	{
+		return _mp;
+	}
+	
+	public void setMuseumPlayer(MuseumPlayer player)
+	{
+		_mp = player;
 	}
 	
 	// ============================================== //

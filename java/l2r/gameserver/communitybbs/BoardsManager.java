@@ -27,6 +27,7 @@ import l2r.gameserver.communitybbs.Managers.ClanBBSManager;
 import l2r.gameserver.communitybbs.Managers.DonateBBSManager;
 import l2r.gameserver.communitybbs.Managers.DropInfoBBSManager;
 import l2r.gameserver.communitybbs.Managers.MailBBSManager;
+import l2r.gameserver.communitybbs.Managers.MuseumBBSManager;
 import l2r.gameserver.communitybbs.Managers.PostBBSManager;
 import l2r.gameserver.communitybbs.Managers.ServicesBBSManager;
 import l2r.gameserver.communitybbs.Managers.TopBBSManager;
@@ -100,9 +101,14 @@ public class BoardsManager
 		{
 			TopBBSManager.getInstance().cbByPass(command, activeChar);
 		}
-		else if (command.startsWith("_maillist"))
+		else if (command.startsWith("_maillist") || command.startsWith("_bbsmuseum"))
 		{
-			MailBBSManager.getInstance().cbByPass(command, activeChar);
+			if (!command.startsWith("_bbsmuseum"))
+			{
+				command = "_bbsmuseum";
+			}
+			MuseumBBSManager.getInstance().cbByPass(command, activeChar);
+			// MailBBSManager.getInstance().cbByPass(command, activeChar);
 		}
 		else if (command.startsWith("_friendlist_0_") || command.startsWith("_bbs_friends") || command.startsWith("_bbsfriends"))
 		{

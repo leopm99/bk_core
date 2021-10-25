@@ -127,6 +127,7 @@ public class L2RaidBossInstance extends L2MonsterInstance
 					{
 						Hero.getInstance().setRBkilled(member.getObjectId(), getId());
 					}
+					member.getMuseumPlayer().addData("raid_kill_" + getId(), 1);
 				}
 			}
 			else
@@ -136,6 +137,7 @@ public class L2RaidBossInstance extends L2MonsterInstance
 				{
 					Hero.getInstance().setRBkilled(player.getObjectId(), getId());
 				}
+				player.getMuseumPlayer().addData("raid_kill_" + getId(), 1);
 			}
 			
 			RaidManager.getInstance().onRaidDeath(this, player);
