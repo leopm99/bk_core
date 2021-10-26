@@ -1066,6 +1066,9 @@ public final class Config extends AbstractConfigs
 	public static int[] RETAIL_LIKE_AUGMENTATION_TOP_CHANCE;
 	public static boolean RETAIL_LIKE_AUGMENTATION_ACCESSORY;
 	public static int[] AUGMENTATION_BLACKLIST;
+	public static boolean ALT_ALLOW_AUGMENT_PVP_ITEMS;
+	public static boolean ALT_ALLOW_AUGMENT_TRADE;
+	public static boolean ALT_ALLOW_AUGMENT_DESTROY;
 	public static double HP_REGEN_MULTIPLIER;
 	public static double MP_REGEN_MULTIPLIER;
 	public static double CP_REGEN_MULTIPLIER;
@@ -1697,6 +1700,9 @@ public final class Config extends AbstractConfigs
 			
 			Arrays.sort(AUGMENTATION_BLACKLIST);
 			
+			ALT_ALLOW_AUGMENT_PVP_ITEMS = Character.getBoolean("AltAllowAugmentPvPItems", true);
+			ALT_ALLOW_AUGMENT_TRADE = Character.getBoolean("AltAllowAugmentTrade", true);
+			ALT_ALLOW_AUGMENT_DESTROY = Character.getBoolean("AltAllowAugmentDestroy", false);
 			ALT_GAME_KARMA_PLAYER_CAN_BE_KILLED_IN_PEACEZONE = Character.getBoolean("AltKarmaPlayerCanBeKilledInPeaceZone", false);
 			ALT_GAME_KARMA_PLAYER_CAN_SHOP = Character.getBoolean("AltKarmaPlayerCanShop", false);
 			ALT_GAME_KARMA_PLAYER_CAN_TELEPORT = Character.getBoolean("AltKarmaPlayerCanTeleport", false);

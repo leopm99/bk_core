@@ -16,7 +16,6 @@ import l2r.L2DatabaseFactory;
 import l2r.features.sellBuffEngine.ShopObject.PrivateBuff;
 import l2r.features.sellBuffEngine.configs.impl.BuffShopConfigs;
 import l2r.gameserver.cache.HtmCache;
-import l2r.gameserver.data.xml.impl.ExperienceData;
 import l2r.gameserver.data.xml.impl.PlayerTemplateData;
 import l2r.gameserver.data.xml.impl.SkillData;
 import l2r.gameserver.data.xml.impl.TransformData;
@@ -214,7 +213,6 @@ public class BuffShopManager
 		stopShop(player);
 		final L2PcInstance seller = createIllusion(PlayerTemplateData.getInstance().getTemplate(40), "Buff Shop", "", new PcAppearance((byte) 1, (byte) 1, (byte) 1, true), Collections.emptyList());
 		seller.getSellList().setTitle(shopObject.getTitle());
-		seller.addExpAndSp(ExperienceData.getInstance().getExpForLevel(85) - seller.getExp(), 0);
 		seller.setPrivateStoreType(PrivateStoreType.PACKAGE_SELL);
 		seller.broadcastPacket(new PrivateStoreMsgSell(seller));
 		L2World.getInstance().addPlayerToWorld(seller);
@@ -334,7 +332,6 @@ public class BuffShopManager
 			{
 				L2PcInstance seller = createIllusion(PlayerTemplateData.getInstance().getTemplate(40), "Buff Shop", "", new PcAppearance((byte) 1, (byte) 1, (byte) 1, true), Collections.emptyList());
 				seller.getSellList().setTitle(shop.getTitle());
-				seller.addExpAndSp(ExperienceData.getInstance().getExpForLevel(85) - seller.getExp(), 0);
 				seller.setPrivateStoreType(PrivateStoreType.PACKAGE_SELL);
 				seller.broadcastPacket(new PrivateStoreMsgSell(seller));
 				L2World.getInstance().addPlayerToWorld(seller);
