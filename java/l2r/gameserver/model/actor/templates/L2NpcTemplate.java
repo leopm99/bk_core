@@ -765,6 +765,11 @@ public final class L2NpcTemplate extends L2CharTemplate implements IIdentifiable
 		return _isQuestMonster;
 	}
 	
+	public boolean isUndying()
+	{
+		return getAIDataStatic().isUndying();
+	}
+	
 	/**
 	 * @return {@code true} if the NPC uses server side name, {@code false} otherwise.
 	 */

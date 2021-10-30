@@ -50,6 +50,7 @@ public class L2NpcAIData
 	private int _aggroRange;
 	private boolean _showName;
 	private boolean _targetable;
+	private boolean _undying;
 	
 	public void setPrimarySkillId(int primarySkillId)
 	{
@@ -195,6 +196,11 @@ public class L2NpcAIData
 		_showName = val;
 	}
 	
+	public void setUndying(boolean val)
+	{
+		_undying = val;
+	}
+	
 	public int getPrimarySkillId()
 	{
 		return _primarySkillId;
@@ -314,5 +320,10 @@ public class L2NpcAIData
 	public boolean isTargetable()
 	{
 		return _targetable;
+	}
+	
+	public boolean isUndying()
+	{
+		return _undying;
 	}
 }

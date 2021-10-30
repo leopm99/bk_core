@@ -143,6 +143,9 @@ public final class Config extends AbstractConfigs
 	// sunrise
 	public static final String CHAMPION_MOBS_CONFIG = "./config/sunrise/ChampionMobs.ini";
 	
+	// Custom
+	public static final String RANDOMSPAWN_FILE = "./config/extra/RandomSpawns.ini";
+	
 	// --------------------------------------------------
 	// L2J Variable Definitions
 	// --------------------------------------------------
@@ -770,6 +773,12 @@ public final class Config extends AbstractConfigs
 	public static boolean L2JMOD_ALLOW_CHANGE_PASSWORD;
 	public static boolean PARTY_LEADER_ONLY_CAN_INVITE;
 	
+	// RandomSpawn
+	public static boolean ENABLE_RANDOM_MONSTER_SPAWNS;
+	public static int MOB_MIN_SPAWN_RANGE;
+	public static int MOB_MAX_SPAWN_RANGE;
+	public static List<Integer> MOBS_LIST_NOT_RANDOM;
+	
 	// --------------------------------------------------
 	// NPC Settings
 	// --------------------------------------------------
@@ -1261,6 +1270,21 @@ public final class Config extends AbstractConfigs
 	public static boolean CHS_ENABLE_FAME;
 	public static int CHS_FAME_AMOUNT;
 	public static int CHS_FAME_FREQUENCY;
+	
+	// --------------------------------------------------
+	// Customs
+	// --------------------------------------------------
+	public static boolean ENABLE_LEVEL_CHATS;
+	public static int LEVEL_ALL_CHAT;
+	public static int LEVEL_PM_CHAT;
+	public static int LEVEL_SHOUT_CHAT;
+	public static int LEVEL_TRADE_CHAT;
+	public static int LEVEL_HERO_CHAT;
+	public static String ALL_MSG;
+	public static String PM_MSG;
+	public static String SHOUT_MSG;
+	public static String TRADE_MSG;
+	public static String HERO_MSG;
 	
 	public static void load()
 	{
@@ -2385,6 +2409,34 @@ public final class Config extends AbstractConfigs
 			L2JMOD_ALLOW_CHANGE_PASSWORD = L2JModSettings.getBoolean("AllowChangePassword", false);
 			
 			PARTY_LEADER_ONLY_CAN_INVITE = L2JModSettings.getBoolean("PartyLeaderOnlyCanInvite", false);
+			
+			ENABLE_LEVEL_CHATS = L2JModSettings.getBoolean("EnableLevelChats", false);
+			LEVEL_ALL_CHAT = L2JModSettings.getInt("LevelAllChat", 0);
+			LEVEL_PM_CHAT = L2JModSettings.getInt("LevelPmChat", 0);
+			LEVEL_SHOUT_CHAT = L2JModSettings.getInt("LevelShoutChat", 0);
+			LEVEL_TRADE_CHAT = L2JModSettings.getInt("LevelTradeChat", 0);
+			LEVEL_HERO_CHAT = L2JModSettings.getInt("LevelHeroChat", 0);
+			ALL_MSG = L2JModSettings.getString("AllMsg", "You can't talk before level 1");
+			PM_MSG = L2JModSettings.getString("PmMsg", "You can't talk before level 1");
+			SHOUT_MSG = L2JModSettings.getString("ShoutMsg", "You can't talk before level 1");
+			TRADE_MSG = L2JModSettings.getString("TradeMsg", "You can't talk before level 1");
+			HERO_MSG = L2JModSettings.getString("HeroMsg", "You can't talk before level 1");
+			
+			// RandomSpawn
+			final PropertiesParser RandomSpawn = new PropertiesParser(RANDOMSPAWN_FILE);
+			
+			ENABLE_RANDOM_MONSTER_SPAWNS = RandomSpawn.getBoolean("EnableRandomMonsterSpawns", false);
+			MOB_MAX_SPAWN_RANGE = RandomSpawn.getInt("MaxSpawnMobRange", 150);
+			MOB_MIN_SPAWN_RANGE = MOB_MAX_SPAWN_RANGE * -1;
+			if (ENABLE_RANDOM_MONSTER_SPAWNS)
+			{
+				String[] mobsIds = RandomSpawn.getString("MobsSpawnNotRandom", "18812,18813,18814,22138").split(",");
+				MOBS_LIST_NOT_RANDOM = new ArrayList<>(mobsIds.length);
+				for (String id : mobsIds)
+				{
+					MOBS_LIST_NOT_RANDOM.add(Integer.valueOf(id));
+				}
+			}
 			
 			// Load PvP L2Properties file (if exists)
 			final PropertiesParser PVPSettings = new PropertiesParser(PVP_CONFIG_FILE);

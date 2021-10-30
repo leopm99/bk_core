@@ -177,6 +177,12 @@ public class CharStatus
 		if (value > 0)
 		{
 			setCurrentHp(Math.max(getCurrentHp() - value, 0));
+			
+			// vGodFather: retail like undying option implementation
+			if ((getActiveChar().getCurrentHp() < 1) && getActiveChar().isUndying())
+			{
+				setCurrentHp(1);
+			}
 		}
 		
 		if ((getActiveChar().getCurrentHp() < 0.5) && getActiveChar().isMortal()) // Die

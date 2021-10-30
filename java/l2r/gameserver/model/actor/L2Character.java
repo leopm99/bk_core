@@ -3128,6 +3128,11 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 		return _isInvul || _isTeleporting || isAffected(EffectFlag.INVUL);
 	}
 	
+	public boolean isUndying()
+	{
+		return false;
+	}
+	
 	public boolean isHpBlocked()
 	{
 		return isAffected(EffectFlag.BLOCK_HP);

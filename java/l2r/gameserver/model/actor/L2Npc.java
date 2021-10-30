@@ -518,6 +518,13 @@ public class L2Npc extends L2Character
 		return getTemplate().isUndead();
 	}
 	
+	// vGodFather: retail like undying option implementation
+	@Override
+	public boolean isUndying()
+	{
+		return getTemplate().isUndying();
+	}
+	
 	/**
 	 * Send a packet NpcInfo with state of abnormal effect to all L2PcInstance in the _KnownPlayers of the L2NpcInstance.
 	 */
