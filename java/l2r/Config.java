@@ -771,6 +771,17 @@ public final class Config extends AbstractConfigs
 	public static int L2JMOD_DUALBOX_CHECK_MAX_L2EVENT_PARTICIPANTS_PER_IP;
 	public static Map<Integer, Integer> L2JMOD_DUALBOX_CHECK_WHITELIST;
 	public static boolean L2JMOD_ALLOW_CHANGE_PASSWORD;
+	
+	// --------------------------------------------------
+	// Fortress Reward
+	// --------------------------------------------------
+	public static int REWARD_ID_FORTRESS;
+	public static int REWARD_CHANCE;
+	public static int MIN_DROP_NORMAL;
+	public static int MAX_DROP_NORMAL;
+	public static int MIN_DROP_CAP;
+	public static int MAX_DROP_CAP;
+	
 	public static boolean PARTY_LEADER_ONLY_CAN_INVITE;
 	
 	// RandomSpawn
@@ -2409,6 +2420,14 @@ public final class Config extends AbstractConfigs
 			L2JMOD_ALLOW_CHANGE_PASSWORD = L2JModSettings.getBoolean("AllowChangePassword", false);
 			
 			PARTY_LEADER_ONLY_CAN_INVITE = L2JModSettings.getBoolean("PartyLeaderOnlyCanInvite", false);
+			
+			// Fortress Reward Manager
+			REWARD_ID_FORTRESS = L2JModSettings.getInt("RewardId", 9912);
+			REWARD_CHANCE = L2JModSettings.getInt("RewardChance", 100);
+			MIN_DROP_NORMAL = L2JModSettings.getInt("MinDropGuard", 4);
+			MAX_DROP_NORMAL = L2JModSettings.getInt("MaxDropGuard", 16);
+			MIN_DROP_CAP = L2JModSettings.getInt("MinDropCaptain", 140);
+			MAX_DROP_CAP = L2JModSettings.getInt("MaxDropCaptain", 300);
 			
 			ENABLE_LEVEL_CHATS = L2JModSettings.getBoolean("EnableLevelChats", false);
 			LEVEL_ALL_CHAT = L2JModSettings.getInt("LevelAllChat", 0);
