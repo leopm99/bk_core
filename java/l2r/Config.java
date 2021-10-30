@@ -768,6 +768,7 @@ public final class Config extends AbstractConfigs
 	public static int L2JMOD_DUALBOX_CHECK_MAX_L2EVENT_PARTICIPANTS_PER_IP;
 	public static Map<Integer, Integer> L2JMOD_DUALBOX_CHECK_WHITELIST;
 	public static boolean L2JMOD_ALLOW_CHANGE_PASSWORD;
+	public static boolean PARTY_LEADER_ONLY_CAN_INVITE;
 	
 	// --------------------------------------------------
 	// NPC Settings
@@ -2382,6 +2383,8 @@ public final class Config extends AbstractConfigs
 				}
 			}
 			L2JMOD_ALLOW_CHANGE_PASSWORD = L2JModSettings.getBoolean("AllowChangePassword", false);
+			
+			PARTY_LEADER_ONLY_CAN_INVITE = L2JModSettings.getBoolean("PartyLeaderOnlyCanInvite", false);
 			
 			// Load PvP L2Properties file (if exists)
 			final PropertiesParser PVPSettings = new PropertiesParser(PVP_CONFIG_FILE);

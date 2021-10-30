@@ -22,7 +22,6 @@ import java.io.File;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import l2r.gameserver.GameTimeController;
 import l2r.gameserver.ThreadPoolManager;
 import l2r.gameserver.cache.HtmCache;
 import l2r.gameserver.communitybbs.BoardsManager;
@@ -50,13 +49,11 @@ import l2r.gameserver.network.serverpackets.ExShowVariationMakeWindow;
 import l2r.gameserver.network.serverpackets.HennaEquipList;
 import l2r.gameserver.network.serverpackets.HennaRemoveList;
 import l2r.gameserver.network.serverpackets.InventoryUpdate;
-import l2r.gameserver.network.serverpackets.MagicSkillUse;
 import l2r.gameserver.network.serverpackets.PartySmallWindowAll;
 import l2r.gameserver.network.serverpackets.PartySmallWindowDeleteAll;
 import l2r.gameserver.network.serverpackets.SetupGauge;
 import l2r.gameserver.network.serverpackets.ShowBoard;
 import l2r.gameserver.network.serverpackets.WareHouseDepositList;
-import l2r.gameserver.util.Broadcast;
 import l2r.gameserver.util.Util;
 
 import gr.sr.configsEngine.configs.impl.CommunityServicesConfigs;
@@ -263,10 +260,8 @@ public class ServicesBBSManager extends BaseBBSManager
 						activeChar.getAI().setIntention(CtrlIntention.AI_INTENTION_IDLE);
 						activeChar.setTarget(activeChar);
 						activeChar.disableAllSkills();
-						Broadcast.toSelfAndKnownPlayersInRadius(activeChar, new MagicSkillUse(activeChar, 1050, 1, 30000, 0), 810000);
-						activeChar.sendPacket(new SetupGauge(SetupGauge.BLUE, 30000));
-						activeChar.setSkillCast(ThreadPoolManager.getInstance().scheduleGeneral(new Teleport(activeChar, c[0], c[1], c[2]), 30000));
-						activeChar.forceIsCasting(10 + GameTimeController.getInstance().getGameTicks() + (30000 / GameTimeController.MILLIS_IN_TICK));
+						activeChar.sendPacket(new SetupGauge(SetupGauge.BLUE, 100));
+						activeChar.setSkillCast(ThreadPoolManager.getInstance().scheduleGeneral(new Teleport(activeChar, c[0], c[1], c[2]), 100));
 					}
 					
 					activeChar.destroyItemByItemId("Community Teleport", itemIdToGet, price, activeChar, true);
@@ -1077,7 +1072,7 @@ public class ServicesBBSManager extends BaseBBSManager
 	@Override
 	public void parsewrite(String url, String ar1, String ar2, String ar3, String ar4, String ar5, L2PcInstance activeChar)
 	{
-	
+		
 	}
 	
 	public static ServicesBBSManager getInstance()
