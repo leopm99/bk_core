@@ -218,12 +218,12 @@ public class BuffShopManager
 		L2World.getInstance().addPlayerToWorld(seller);
 		seller.spawnMe(player.getX(), player.getY(), player.getZ());
 		seller.setHeading(player.getHeading());
-		seller.setCurrentHpMp(seller.getMaxHp(), seller.getMaxMp());
 		seller.sitDown();
 		shopObject.setXYZ(player.getX(), player.getY(), player.getZ(), player.getHeading());
 		shopObject.setSellerObjectId(seller.getObjectId());
 		sellers.put(seller.getObjectId(), player.getObjectId());
 		TransformData.getInstance().transformPlayer(Rnd.get(118, 120), seller);
+		seller.setCurrentHpMp(seller.getMaxHp(), seller.getMaxMp());
 		seller.broadcastUserInfo();
 		
 		L2DatabaseFactory.simpleExcuter(SAVE_SHOP, shopObject.getOwnerId(), shopObject.getBuffLine(), shopObject.getTitle(), shopObject.getX(), shopObject.getY(), shopObject.getZ(), shopObject.getHeading());
@@ -338,10 +338,10 @@ public class BuffShopManager
 				seller.spawnMe(shop.getX(), shop.getY(), shop.getZ());
 				seller.setHeading(shop.getHeading());
 				seller.sitDown();
-				seller.setCurrentHpMp(seller.getMaxHp(), seller.getMaxMp());
 				shop.setSellerObjectId(seller.getObjectId());
 				sellers.put(seller.getObjectId(), ownerId);
 				TransformData.getInstance().transformPlayer(Rnd.get(118, 120), seller);
+				seller.setCurrentHpMp(seller.getMaxHp(), seller.getMaxMp());
 			});
 		}
 	}

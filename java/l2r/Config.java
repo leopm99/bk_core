@@ -42,9 +42,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.stream.IntStream;
 
@@ -145,6 +147,7 @@ public final class Config extends AbstractConfigs
 	
 	// Custom
 	public static final String RANDOMSPAWN_FILE = "./config/extra/RandomSpawns.ini";
+	public static final String SIEGE_CASTLE_MANAGER_FILE = "./config/extra/SiegeInfoSettings.ini";
 	
 	// --------------------------------------------------
 	// L2J Variable Definitions
@@ -718,6 +721,17 @@ public final class Config extends AbstractConfigs
 	// --------------------------------------------------
 	// L2JMods Settings
 	// --------------------------------------------------
+	// subacu milton
+	public static boolean ACUMULATIVE_SUBCLASS_SKILLS;
+	public static boolean ACUMULATIVE_SUBCLASS_VIP_SYSTEM;
+	public static Map<Integer, Integer> VIP_SKILLS;
+	public static boolean ACUMULATIVE_SUBCLASS_ALL_CLASSES;
+	public static boolean ACUMULATIVE_SUBCLASS_PASIVE;
+	public static boolean ACUMULATIVE_SUBCLASS_OFFENSIVE;
+	public static boolean ACUMULATIVE_SUBCLASS_BUFF;
+	public static boolean ACUMULATIVE_SUBCLASS_TOGGLE;
+	public static boolean ACUMULATIVE_SUBCLASS_DONT_SKILLS;
+	public static Set<Integer> DONT_ACUMULATIVE_SKILLS_ID = new HashSet<>();
 	public static boolean L2JMOD_ALLOW_WEDDING;
 	public static int L2JMOD_WEDDING_PRICE;
 	public static boolean L2JMOD_WEDDING_PUNISH_INFIDELITY;
@@ -781,6 +795,12 @@ public final class Config extends AbstractConfigs
 	public static int MAX_DROP_NORMAL;
 	public static int MIN_DROP_CAP;
 	public static int MAX_DROP_CAP;
+	
+	// --------------------------------------------------
+	// Siege Castle Manager CMD
+	// --------------------------------------------------
+	public static boolean ENABLE_SIEGE_CASTLE_MANAGER;
+	public static boolean ENABLE_GNU_PANEL;
 	
 	public static boolean PARTY_LEADER_ONLY_CAN_INVITE;
 	
@@ -2301,6 +2321,48 @@ public final class Config extends AbstractConfigs
 			// Load L2JMod L2Properties file (if exists)
 			final PropertiesParser L2JModSettings = new PropertiesParser(L2JMOD_CONFIG_FILE);
 			
+			// Cumulative Subclass Settings
+			ACUMULATIVE_SUBCLASS_SKILLS = L2JModSettings.getBoolean("AcumulativeSkills", false);
+			ACUMULATIVE_SUBCLASS_VIP_SYSTEM = L2JModSettings.getBoolean("AcumulativeSkillsVipSystem", false);
+			if (ACUMULATIVE_SUBCLASS_VIP_SYSTEM) // create map if system is enabled
+			{
+				String[] VipSkillsSplit = L2JModSettings.getProperty("VipSkills", "").split(";");
+				VIP_SKILLS = new HashMap<>(VipSkillsSplit.length);
+				for (String skill : VipSkillsSplit)
+				{
+					String[] skillSplit = skill.split(",");
+					if (skillSplit.length != 2)
+					{
+						_log.warn(StringUtil.concat("[VipSkills]: invalid config property -> VipSkills \"" + skill + "\""));
+					}
+					else
+					{
+						try
+						{
+							VIP_SKILLS.put(Integer.valueOf(skillSplit[0]), Integer.valueOf(skillSplit[1]));
+						}
+						catch (NumberFormatException nfe)
+						{
+							if (!skill.isEmpty())
+							{
+								_log.warn(StringUtil.concat("[VipSkills]: invalid config property -> VipSkills \"" + skillSplit[0] + "\"" + skillSplit[1]));
+							}
+						}
+					}
+				}
+			}
+			ACUMULATIVE_SUBCLASS_ALL_CLASSES = L2JModSettings.getBoolean("AcumulativeAllClass", false);
+			ACUMULATIVE_SUBCLASS_PASIVE = L2JModSettings.getBoolean("AcumulativeSkillsPasive", false);
+			ACUMULATIVE_SUBCLASS_OFFENSIVE = L2JModSettings.getBoolean("AcumulativeSkillsOffensive", false);
+			ACUMULATIVE_SUBCLASS_BUFF = L2JModSettings.getBoolean("AcumulativeSkillsBuff", false);
+			ACUMULATIVE_SUBCLASS_TOGGLE = L2JModSettings.getBoolean("AcumulativeSkillsToggle", false);
+			ACUMULATIVE_SUBCLASS_DONT_SKILLS = L2JModSettings.getBoolean("DontAcumulativeSkills", true);
+			String[] aux = L2JModSettings.getString("DontAcumulativeSkillsId", "351;349").split(";");
+			for (String subAcuInfo : aux)
+			{
+				DONT_ACUMULATIVE_SKILLS_ID.add(Integer.valueOf(subAcuInfo));
+			}
+			
 			L2JMOD_ALLOW_WEDDING = L2JModSettings.getBoolean("AllowWedding", false);
 			L2JMOD_WEDDING_PRICE = L2JModSettings.getInt("WeddingPrice", 250000000);
 			L2JMOD_WEDDING_PUNISH_INFIDELITY = L2JModSettings.getBoolean("WeddingPunishInfidelity", true);
@@ -2428,6 +2490,9 @@ public final class Config extends AbstractConfigs
 			MAX_DROP_NORMAL = L2JModSettings.getInt("MaxDropGuard", 16);
 			MIN_DROP_CAP = L2JModSettings.getInt("MinDropCaptain", 140);
 			MAX_DROP_CAP = L2JModSettings.getInt("MaxDropCaptain", 300);
+			
+			ENABLE_SIEGE_CASTLE_MANAGER = L2JModSettings.getBoolean("AllowSiegeCastleManager", true);
+			ENABLE_GNU_PANEL = L2JModSettings.getBoolean("EnableGNUPanel", true);
 			
 			ENABLE_LEVEL_CHATS = L2JModSettings.getBoolean("EnableLevelChats", false);
 			LEVEL_ALL_CHAT = L2JModSettings.getInt("LevelAllChat", 0);

@@ -33,6 +33,7 @@ import l2r.gameserver.data.xml.impl.SkillTreesData;
 import l2r.gameserver.enums.IllegalActionPunishmentType;
 import l2r.gameserver.model.actor.instance.L2PcInstance;
 import l2r.gameserver.model.skills.L2Skill;
+import l2r.gameserver.model.skills.L2SkillType;
 import l2r.gameserver.util.Util;
 
 import org.slf4j.Logger;
@@ -52,64 +53,162 @@ public class SkillDAOMySQLImpl implements SkillDAO
 	private static final String REPLACE = "REPLACE INTO character_skills (charId,skill_id,skill_level,class_index) VALUES (?,?,?,?)";
 	private static final String DELETE_ONE = "DELETE FROM character_skills WHERE skill_id=? AND charId=? AND class_index=?";
 	private static final String DELETE_ALL = "DELETE FROM character_skills WHERE charId=? AND class_index=?";
+	// Cumulative Subclass
+	private static final String ACUMULATE_SKILLS_FOR_CHAR_SUB = "SELECT skill_id,skill_level,class_index FROM character_skills WHERE charId=? ORDER BY skill_id,skill_level ASC";
 	
 	@Override
 	public void load(L2PcInstance player)
 	{
-		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
-			PreparedStatement ps = con.prepareStatement(SELECT))
+		if (Config.ACUMULATIVE_SUBCLASS_SKILLS)
 		{
-			ps.setInt(1, player.getObjectId());
-			ps.setInt(2, player.getClassIndex());
-			try (ResultSet rs = ps.executeQuery())
+			try (Connection con = L2DatabaseFactory.getInstance().getConnection();
+				PreparedStatement ps = con.prepareStatement(ACUMULATE_SKILLS_FOR_CHAR_SUB))
 			{
-				while (rs.next())
+				ps.setInt(1, player.getObjectId());
+				try (ResultSet rs = ps.executeQuery())
 				{
-					final int id = rs.getInt("skill_id");
-					final int level = rs.getInt("skill_level");
-					
-					// Create a L2Skill object for each record
-					final L2Skill skill = SkillData.getInstance().getSkill(id, level);
-					
-					if (skill == null)
+					while (rs.next())
 					{
-						Log.warn("Skipped null skill Id: " + id + " Level: " + level + " while restoring player skills for playerObjId: " + player.getObjectId());
-						continue;
-					}
-					
-					// Add the L2Skill object to the L2Character _skills and its Func objects to the calculator set of the L2Character
-					player.addSkill(skill);
-					
-					if (Config.SKILL_CHECK_ENABLE)
-					{
-						boolean mustCheck = false;
-						if (!player.isGM())
+						final int id = rs.getInt("skill_id");
+						final int level = rs.getInt("skill_level");
+						final int class_index = rs.getInt("class_index");
+						
+						// Create a L2Skill object for each record
+						final L2Skill skill = SkillData.getInstance().getSkill(id, level);
+						
+						if (skill == null)
+						
 						{
-							mustCheck = true;
+							Log.warn("Skipped null skill Id: " + id + " Level: " + level + " while restoring player skills for playerObjId: " + player.getObjectId());
+							continue;
 						}
-						else if (player.isGM() && Config.SKILL_CHECK_GM)
+						if (player.getClassIndex() != class_index)
 						{
-							mustCheck = true;
+							// we only accumulate assets.
+							if (Config.ACUMULATIVE_SUBCLASS_PASIVE && skill.isPassive())
+							{
+								continue;
+							}
+							
+							// we don't accumulate skills of wizards attack.
+							if (Config.ACUMULATIVE_SUBCLASS_OFFENSIVE && skill.isOffensive())
+							{
+								continue;
+							}
+							// we don't accumulate skills buff.
+							if (Config.ACUMULATIVE_SUBCLASS_BUFF && !(skill.getSkillType() == L2SkillType.BUFF))
+							{
+								continue;
+							}
+							// we don't accumulate toggle skills.
+							if (Config.ACUMULATIVE_SUBCLASS_TOGGLE && skill.isToggle())
+							{
+								continue;
+							}
+							
+							// we don't accumulate some specific skills.
+							if (Config.ACUMULATIVE_SUBCLASS_DONT_SKILLS)
+							{
+								if (Config.DONT_ACUMULATIVE_SKILLS_ID.contains(id))
+								{
+									continue;
+								}
+							}
 						}
 						
-						if (mustCheck)
+						// Add the L2Skill object to the L2Character _skills and its Func objects to the calculator set of the L2Character
+						player.addSkill(skill);
+						if (Config.SKILL_CHECK_ENABLE)
 						{
-							if (!SkillTreesData.getInstance().isSkillAllowed(player, skill))
+							boolean mustCheck = false;
+							if (!player.isGM())
 							{
-								Util.handleIllegalPlayerAction(player, "Player " + player.getName() + " has invalid skill " + skill.getName() + " (" + skill.getId() + "/" + skill.getLevel() + "), class:" + ClassListData.getInstance().getClass(player.getClassId()).getClassName(), IllegalActionPunishmentType.BROADCAST);
-								if (Config.SKILL_CHECK_REMOVE)
+								mustCheck = true;
+							}
+							else if (player.isGM() && Config.SKILL_CHECK_GM)
+							{
+								mustCheck = true;
+							}
+							
+							if (mustCheck)
+							{
+								if (!SkillTreesData.getInstance().isSkillAllowed(player, skill))
 								{
-									player.removeSkill(skill);
+									Util.handleIllegalPlayerAction(player, "Player " + player.getName() + " has invalid skill " + skill.getName() + " (" + skill.getId() + "/" + skill.getLevel() + "), class:" + ClassListData.getInstance().getClass(player.getClassId()).getClassName(), IllegalActionPunishmentType.BROADCAST);
+									if (Config.SKILL_CHECK_REMOVE)
+									{
+										player.removeSkill(skill);
+									}
 								}
 							}
 						}
 					}
 				}
 			}
+			
+			catch (Exception e)
+			{
+				Log.error("Could not restore " + player + " skills: {}", e);
+			}
+			
 		}
-		catch (Exception e)
+		else
 		{
-			Log.error("Could not restore " + player + " skills: {}", e);
+			try (Connection con = L2DatabaseFactory.getInstance().getConnection();
+				PreparedStatement ps = con.prepareStatement(SELECT))
+			{
+				ps.setInt(1, player.getObjectId());
+				ps.setInt(2, player.getClassIndex());
+				try (ResultSet rs = ps.executeQuery())
+				{
+					while (rs.next())
+					{
+						final int id = rs.getInt("skill_id");
+						final int level = rs.getInt("skill_level");
+						
+						// Create a L2Skill object for each record
+						final L2Skill skill = SkillData.getInstance().getSkill(id, level);
+						
+						if (skill == null)
+						{
+							Log.warn("Skipped null skill Id: " + id + " Level: " + level + " while restoring player skills for playerObjId: " + player.getObjectId());
+							continue;
+						}
+						
+						// Add the L2Skill object to the L2Character _skills and its Func objects to the calculator set of the L2Character
+						player.addSkill(skill);
+						
+						if (Config.SKILL_CHECK_ENABLE)
+						{
+							boolean mustCheck = false;
+							if (!player.isGM())
+							{
+								mustCheck = true;
+							}
+							else if (player.isGM() && Config.SKILL_CHECK_GM)
+							{
+								mustCheck = true;
+							}
+							
+							if (mustCheck)
+							{
+								if (!SkillTreesData.getInstance().isSkillAllowed(player, skill))
+								{
+									Util.handleIllegalPlayerAction(player, "Player " + player.getName() + " has invalid skill " + skill.getName() + " (" + skill.getId() + "/" + skill.getLevel() + "), class:" + ClassListData.getInstance().getClass(player.getClassId()).getClassName(), IllegalActionPunishmentType.BROADCAST);
+									if (Config.SKILL_CHECK_REMOVE)
+									{
+										player.removeSkill(skill);
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				Log.error("Could not restore " + player + " skills: {}", e);
+			}
 		}
 	}
 	

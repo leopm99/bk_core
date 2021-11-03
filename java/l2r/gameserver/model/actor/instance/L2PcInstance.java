@@ -14515,6 +14515,34 @@ public final class L2PcInstance extends L2Playable
 		return _premiumService;
 	}
 	
+	// subacu milton
+	public void rewardVipSkills()
+	{
+		L2Skill skill;
+		for (Integer skillid : Config.VIP_SKILLS.keySet())
+		{
+			int skilllvl = Config.VIP_SKILLS.get(skillid);
+			skill = SkillData.getInstance().getInfo(skillid, skilllvl);
+			if (skill != null)
+			{
+				addSkill(skill, true);
+			}
+		}
+		sendMessage("VipSystem give to you Vip's skills");
+	}
+	
+	public void lostVipSkills()
+	{
+		L2Skill skill;
+		for (Integer skillid : Config.VIP_SKILLS.keySet())
+		{
+			int skilllvl = Config.VIP_SKILLS.get(skillid);
+			skill = SkillData.getInstance().getInfo(skillid, skilllvl);
+			removeSkill(skill);
+		}
+		sendMessage("Reload To state vip for Vip´s-skills");
+	}
+	
 	// ============================================== //
 	// Variables Engine By L][Sunrise Team //
 	// ============================================== //

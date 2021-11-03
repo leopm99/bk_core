@@ -154,6 +154,19 @@ public class EnterWorld extends L2GameClientPacket
 		
 		getClient().setClientTracert(tracert);
 		
+		// Cumulative Subclass
+		if (Config.ACUMULATIVE_SUBCLASS_VIP_SYSTEM)
+		{
+			if (activeChar.isPremium())
+			{
+				activeChar.rewardVipSkills();
+			}
+			else
+			{
+				activeChar.lostVipSkills();
+			}
+		}
+		
 		// Restore to instanced area if enabled
 		if (Config.RESTORE_PLAYER_INSTANCE)
 		{

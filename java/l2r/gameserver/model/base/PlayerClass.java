@@ -248,10 +248,16 @@ public enum PlayerClass
 		
 		if (_level == Third)
 		{
-			if (player.getRace() != Race.KAMAEL)
+			if (Config.ACUMULATIVE_SUBCLASS_ALL_CLASSES)
 			{
 				subclasses = EnumSet.copyOf(mainSubclassSet);
 				
+				subclasses.addAll(neverSubclassed);
+				subclasses.remove(this);
+			}
+			else if (player.getRace() != Race.KAMAEL)
+			{
+				subclasses = EnumSet.copyOf(mainSubclassSet);
 				subclasses.remove(this);
 				
 				switch (player.getRace())
