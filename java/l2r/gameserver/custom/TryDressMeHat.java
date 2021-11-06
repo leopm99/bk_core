@@ -20,9 +20,9 @@ public class TryDressMeHat implements Runnable
 	@Override
 	public void run()
 	{
-		p.sendPacket(SystemMessageId.NO_LONGER_TRYING_ON);
-		itemToRemove.setOldVisualItemId(0);
 		DressMeHandler.visualityHat(p, itemToRemove, itemToRemove.getOldVisualItemId());
+		itemToRemove.setOldVisualItemId(0);
+		p.sendPacket(SystemMessageId.NO_LONGER_TRYING_ON);
 		p.broadcastUserInfo();
 	}
 }
